@@ -174,7 +174,7 @@ class entertainmentController extends Controller
     }
     function getaframedata()
     {
-        $data=animedata::paginate(12);
+        $data=animedata::paginate(3);
         return $data;
     }
     function geteachinfo($id)
