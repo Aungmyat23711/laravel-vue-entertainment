@@ -192,4 +192,5 @@ class entertainmentController extends Controller
         $data=episode::where('season_id',$id)->get();
         return $data;
     }
+    
 }
