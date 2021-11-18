@@ -1,0 +1,80 @@
+<template>
+  <div>
+     <v-app>
+       <header>
+             <nav>
+               <v-app-bar dark app flat>
+                   <v-app-bar-nav-icon dark @click="drawer=!drawer"></v-app-bar-nav-icon>
+                   <v-toolbar-title>
+                      <span class="font-effect-ice text-uppercase " style="font-size:25px;">
+                            A_Series
+                       </span>
+                       <span class="font-effect-fire-animation orange--text font-weight-bold" style="font-size:25px;">
+                             World
+                       </span>
+                   </v-toolbar-title>
+                   <v-spacer></v-spacer>
+                   <v-btn text class="white--text">
+                      <span>Logout</span>
+                      <v-icon>logout</v-icon>
+                   </v-btn>
+               </v-app-bar>
+              <v-navigation-drawer app v-model="drawer" dark>
+                <v-list>
+                  <v-list-item :class="`link ${link.title}`" v-for="link in links" :key="link.id" :to="link.to">
+                    <v-list-item-action>
+                      <v-icon>{{link.icon}}</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                      <v-list-item-title>{{link.title}}</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-navigation-drawer>
+             </nav>
+       </header>
+       <v-main dark class="user">
+          <v-container fluid>
+               <router-view></router-view>
+          </v-container>
+       </v-main>
+       <v-footer padless>
+            <v-row justify="center" class="black lighten py-3 white--text">
+              <v-btn text class="ml-4 white--text">Home</v-btn>
+              <v-btn text class="ml-4 white--text">Contact us</v-btn>
+              <v-btn text class="ml-4 white--text">About us</v-btn>
+              <v-btn text class="ml-4 white--text">Team</v-btn>
+              <v-col 
+              cols="12"
+              class="text-center"
+              >
+                  This is footer
+              </v-col>
+            </v-row>
+       </v-footer>
+     </v-app>
+  </div>
+</template>
+
+<script>
+export default {
+data()
+{
+  return {
+    drawer:false,
+    links:[
+      {icon:'home',title:'Home',to:'/aframe/home'},
+    ]
+  }
+}
+}
+</script>
+
+<style>
+.v-main.user{
+      background: lightslategray;
+}
+.link.Home{
+  text-decoration: none;
+}
+</style>
