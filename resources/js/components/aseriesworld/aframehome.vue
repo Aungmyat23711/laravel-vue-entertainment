@@ -1,6 +1,8 @@
 <template>
   <div>
-      <v-card>
+    <vue-progress-bar></vue-progress-bar>
+    <v-container fluid  v-if="this.objnull==false">
+           <v-card>
     <v-tabs
       dark
       background-color="black darken-3"
@@ -19,8 +21,26 @@
       </v-tab>
     </v-tabs>
   </v-card>
-  <v-container fluid>
-      <v-row >
+  <v-row>
+    <v-col cols="4" md="8" class="mt-6">
+       <h4 class="subheading orange--text">{{type}}</h4>
+    </v-col>
+    <v-col cols="8" md="4" class="text-right mt-2">
+          <v-text-field
+          label="Search"
+          prepend-icon="search"
+          v-model="search"
+          dark
+          >
+          </v-text-field>
+    </v-col>
+  </v-row>
+    </v-container>
+  <v-container fluid  v-if="this.objnull==false">
+    <!-- <v-layout column>
+     <h4 class="subheading orange--text">{{type}}</h4>
+    </v-layout> -->
+      <v-row v-if="notavaliable==false">
           <v-col cols="6" sm="4" md="2" v-for="tab in datas.data" :key="tab.id" class="flexcard" height="100%">
                <v-card dark >
                   <v-responsive class="text-center pt-3 hoverimg" @click="goinfo(tab.id)">
@@ -36,7 +56,7 @@
                </v-card>
           </v-col>
       </v-row>
-      <v-row>
+      <v-row v-if="notavaliable==false">
         <v-col cols="12" md="12">
            <div>
               <pagination
@@ -47,7 +67,36 @@
            </div>
         </v-col>
       </v-row>
+      <v-row v-if="notavaliable==true">
+        <v-col cols="12" md="6" offset-md="3">
+            <div class="nal text-center" >
+                <h4>This type is not avaliable.</h4>
+            </div>
+        </v-col>
+      </v-row>
   </v-container>
+  <v-container v-if="this.objnull==true" style="margin-top:150px;">
+       <v-row>
+         <v-col cols="12" md="6" offset-md="3">
+           <div class="nal" align="center">
+                <h3 class="headline font-effect-fire-animation">Loading</h3>
+                <div class="spinner-grow text-primary" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+<div class="spinner-grow text-secondary" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+<div class="spinner-grow text-success" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+<div class="spinner-grow text-danger" role="status">
+  <span class="sr-only">Loading...</span>
+</div>   
+           </div>
+         </v-col>
+       </v-row>
+  </v-container>
+  
   </div>
 </template>
 
@@ -58,16 +107,31 @@ data()
     return {
         datas:{},
         effect:'',
-        tabs:[]
+        tabs:[],
+        type:'',
+        notavaliable:false,
+        objnull:false,
+        search:''
     }
 },
 methods:{
    async getdata(page=1)
     {
+      this.$Progress.start();
+      if(JSON.stringify(this.datas)==='{}')
+      {
+        this.objnull=true;
+      }else
+      {
+        this.objnull=false;
+      }
       await axios.get(`/aframe/getdata?page=${page}`)
       .then((resp)=>{
           this.datas=resp.data;
+          this.objnull=false;
+          this.$Progress.finish();
       })
+      
     },
     active(tab)
     {
@@ -88,7 +152,14 @@ methods:{
     {
       await axios.get('/aframe/getdatabytype/'+name)
       .then((resp)=>{
+        this.type=name;
         this.datas=resp.data;
+        if(resp.data.from==null)
+       {
+          this.notavaliable=true;
+       }else{
+         this.notavaliable=false;
+       }
       })
     }
 },
@@ -96,15 +167,11 @@ mounted()
 {
     this.getdata();
     this.getTpye();
-}
+},
 }
 </script>
 
-<style>
-.flexcard {
-  display: flex;
-  flex-direction: column;
-}
+<style >
 .hoverimg:hover .image{
     opacity: 0.3;
     cursor: pointer;
@@ -127,5 +194,11 @@ ul.pagination{
 }
 .page-item{
   padding:10px;
+}
+.nal{
+  border: 1px solid orange;
+  border-radius: 20px;
+  padding: 50px;
+  background: orange;
 }
 </style>

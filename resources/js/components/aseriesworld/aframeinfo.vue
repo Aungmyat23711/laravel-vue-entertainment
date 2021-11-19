@@ -24,17 +24,17 @@
             <v-divider></v-divider>
             <v-row>
                 <v-col md="12">
-                    <div class="headline font-effect-distressed">Plot</div>
-                     <div class="title font-effect-distressed">
+                    <div class="headline font-effect-outline">Plot</div>
+                     <div class="title font-effect-outline white--text">
                          {{info.story}}
                      </div>
                 </v-col>
             </v-row>
             <v-divider></v-divider>
       </v-container>
-      <v-container fluid>
+      <v-container fluid class="ma-5">
            <v-row>
-               <v-col cols="12" md="6">
+               <v-col cols="10" md="6">
                       <v-expansion-panels>
                 <v-expansion-panel v-for="season in eachseasons" :key="season.id" class="blue lighten">
                     <v-expansion-panel-header @click="calldata(season.id)" class="white--text">

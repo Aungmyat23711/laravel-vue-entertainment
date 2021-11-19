@@ -40,6 +40,8 @@
         "sweetalert2": "^11.1.1",
         "vee-validate": "^3.4.13",
         "vform": "^2.1.1",
+        "vue-loading-overlay": "3.0",
+        "vue-progressbar": "^0.7.5",
         "vue-router": "^3.5.2",
         "vue-session": "^1.0.0",
         "vue-sidebar-menu": "^4.8.1",
