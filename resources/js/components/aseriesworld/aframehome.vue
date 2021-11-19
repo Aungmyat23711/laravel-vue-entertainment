@@ -129,6 +129,7 @@ methods:{
       .then((resp)=>{
           this.datas=resp.data;
           this.objnull=false;
+          this.type='all'
           this.$Progress.finish();
       })
       
