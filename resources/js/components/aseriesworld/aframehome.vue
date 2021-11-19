@@ -207,6 +207,8 @@ methods:{
     },
     async getsearchdata(page=1)
     {
+      this.$Progress.start();
+      this.objnull=true;
       this.issearch=true;
       this.searchdatanull=false;
       this.searchisnull=false;
@@ -226,7 +228,9 @@ methods:{
          this.type="please write something to search";
          this.searchisnull=true;
        }
-       this.searchisnull=false
+       this.searchisnull=false;
+       this.objnull=false;
+       this.$Progress.finish();
       })
     },
     active(tab)
