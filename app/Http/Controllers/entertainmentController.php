@@ -173,8 +173,20 @@ class entertainmentController extends Controller
         return $data;
     }
     function getaframedata()
-    {
+    {  
         $data=animedata::paginate(6);
+        return $data;
+    }
+    function getsearchdata()
+    {  
+        $data=animedata::when(request('search'),function($query){
+            $query->where('name','like','%'.request('search').'%')
+                  ->orWhere('type1','like','%'.request('search').'%')
+                  ->orWhere('type2','like','%'.request('search').'%')
+                  ->orWhere('type3','like','%'.request('search').'%')
+                  ->orWhere('type4','like','%'.request('search').'%')
+                  ->orWhere('type4','like','%'.request('search').'%');
+        })->paginate(6);
         return $data;
     }
     function geteachinfo($id)

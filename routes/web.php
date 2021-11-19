@@ -61,6 +61,7 @@ Route::get('/aframe/info/getseasoninfo/{id}',[entertainmentController::class,'ge
 Route::get('/aframe/info/getseasonbyid/{id}',[entertainmentController::class,'calldata']);
 Route::get('/aframe/getType',[entertainmentController::class,'getaframeType']);
 Route::get('/aframe/getdatabytype/{name}',[entertainmentController::class,'getdatabytype']);
+Route::get('/aframe/getsearchdata',[entertainmentController::class,'getsearchdata']);
 
 //for chat
 Route::view('/animeframe/chatpage','laravel+vue/chat');
