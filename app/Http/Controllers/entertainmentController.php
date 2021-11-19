@@ -192,5 +192,9 @@ class entertainmentController extends Controller
         $data=episode::where('season_id',$id)->get();
         return $data;
     }
-    
+    function getaframeType()
+    {
+        $data=type::all();
+        return $data;
+    }
 }

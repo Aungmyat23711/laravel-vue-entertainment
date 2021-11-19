@@ -7,14 +7,14 @@
       show-arrows
     >
       <v-tabs-slider color="teal lighten-3"></v-tabs-slider>
-       <v-tab>
+       <v-tab @click="getdata">
            all 
        </v-tab>
       <v-tab
         v-for="tab in tabs"
         :key="tab.id"
       >
-       {{tab.tab}}
+       {{tab.type_name}}
       </v-tab>
     </v-tabs>
   </v-card>
@@ -75,11 +75,19 @@ methods:{
     goinfo(id)
     {
        this.$router.push('/aframe/info/'+id)
+    },
+    getTpye()
+    {
+      axios.get('/aframe/getType')
+      .then((resp)=>{
+        this.tabs=resp.data;
+      })
     }
 },
 mounted()
 {
     this.getdata();
+    this.getTpye();
 }
 }
 </script>
