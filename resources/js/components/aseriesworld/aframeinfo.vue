@@ -2,11 +2,11 @@
   <div style="padding-bottom:150px;">
       <v-container fluid class="ma-5" v-for="info in eachinfo" :key="info.id">
             <v-row>
-                <v-col md="4" class="text-center">
+                <v-col cols="12" md="4" class="text-center">
                    <img :src="`/anime/${info.photo}`" alt="" style="width:250px;height:300px;">
                 </v-col>
                 <v-divider vertical></v-divider>
-                <v-col md="8" class="font-effect-outline">
+                <v-col cols="12" md="8" class="font-effect-outline">
                     <div class="headline">Name</div>
                     <div class="title">{{info.name}}</div><hr>
                     <div class="headline">Season</div>

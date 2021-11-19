@@ -174,7 +174,7 @@ class entertainmentController extends Controller
     }
     function getaframedata()
     {
-        $data=animedata::paginate(3);
+        $data=animedata::paginate(6);
         return $data;
     }
     function geteachinfo($id)
@@ -195,6 +195,16 @@ class entertainmentController extends Controller
     function getaframeType()
     {
         $data=type::all();
+        return $data;
+    }
+    function getdatabytype($name)
+    {
+        $data=animedata::where('type1',$name)
+                       ->orWhere('type2',$name)
+                       ->orWhere('type3',$name)
+                       ->orWhere('type4',$name)
+                       ->orWhere('type5',$name)
+                       ->paginate(6);
         return $data;
     }
 }

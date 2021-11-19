@@ -13,6 +13,7 @@
       <v-tab
         v-for="tab in tabs"
         :key="tab.id"
+        @click="getdatabytype(tab.type_name)"
       >
        {{tab.type_name}}
       </v-tab>
@@ -76,11 +77,18 @@ methods:{
     {
        this.$router.push('/aframe/info/'+id)
     },
-    getTpye()
+    async getTpye()
     {
-      axios.get('/aframe/getType')
+      await axios.get('/aframe/getType')
       .then((resp)=>{
         this.tabs=resp.data;
+      })
+    },
+    async getdatabytype(name)
+    {
+      await axios.get('/aframe/getdatabytype/'+name)
+      .then((resp)=>{
+        this.datas=resp.data;
       })
     }
 },
