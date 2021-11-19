@@ -173,8 +173,20 @@ class entertainmentController extends Controller
         return $data;
     }
     function getaframedata()
-    {
-        $data=animedata::paginate(3);
+    {  
+        $data=animedata::paginate(6);
+        return $data;
+    }
+    function getsearchdata()
+    {  
+        $data=animedata::when(request('search'),function($query){
+            $query->where('name','like','%'.request('search').'%')
+                  ->orWhere('type1','like','%'.request('search').'%')
+                  ->orWhere('type2','like','%'.request('search').'%')
+                  ->orWhere('type3','like','%'.request('search').'%')
+                  ->orWhere('type4','like','%'.request('search').'%')
+                  ->orWhere('type4','like','%'.request('search').'%');
+        })->paginate(6);
         return $data;
     }
     function geteachinfo($id)
@@ -192,5 +204,19 @@ class entertainmentController extends Controller
         $data=episode::where('season_id',$id)->get();
         return $data;
     }
-    
+    function getaframeType()
+    {
+        $data=type::all();
+        return $data;
+    }
+    function getdatabytype($name)
+    {
+        $data=animedata::where('type1',$name)
+                       ->orWhere('type2',$name)
+                       ->orWhere('type3',$name)
+                       ->orWhere('type4',$name)
+                       ->orWhere('type5',$name)
+                       ->paginate(6);
+        return $data;
+    }
 }

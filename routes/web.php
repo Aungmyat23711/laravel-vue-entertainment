@@ -59,6 +59,9 @@ Route::view('/aframe/info/{id}','laravel+vue/aseriesworld');
 Route::get('/aframe/info/geteachinfo/{id}',[entertainmentController::class,'geteachinfo']);
 Route::get('/aframe/info/getseasoninfo/{id}',[entertainmentController::class,'getseasoninfo']);
 Route::get('/aframe/info/getseasonbyid/{id}',[entertainmentController::class,'calldata']);
+Route::get('/aframe/getType',[entertainmentController::class,'getaframeType']);
+Route::get('/aframe/getdatabytype/{name}',[entertainmentController::class,'getdatabytype']);
+Route::get('/aframe/getsearchdata',[entertainmentController::class,'getsearchdata']);
 
 //for chat
 Route::view('/animeframe/chatpage','laravel+vue/chat');

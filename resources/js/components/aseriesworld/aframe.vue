@@ -6,7 +6,7 @@
                <v-app-bar dark app flat>
                    <v-app-bar-nav-icon dark @click="drawer=!drawer"></v-app-bar-nav-icon>
                    <v-toolbar-title>
-                      <span class="font-effect-ice text-uppercase " style="font-size:25px;">
+                      <span class="font-effect-outline text-uppercase " style="font-size:25px;">
                             A_Series
                        </span>
                        <span class="font-effect-fire-animation orange--text font-weight-bold" style="font-size:25px;">
@@ -34,12 +34,11 @@
              </nav>
        </header>
        <v-main dark class="user">
-          <v-container fluid>
+         
                <router-view></router-view>
-          </v-container>
        </v-main>
-       <v-footer padless>
-            <v-row justify="center" class="black lighten py-3 white--text">
+       <v-footer style="background:black;">
+            <v-row justify="center" class="black my-3 white--text">
               <v-btn text class="ml-4 white--text">Home</v-btn>
               <v-btn text class="ml-4 white--text">Contact us</v-btn>
               <v-btn text class="ml-4 white--text">About us</v-btn>
@@ -72,7 +71,8 @@ data()
 
 <style>
 .v-main.user{
-      background: lightslategray;
+      background: rgb(23, 24, 26);
+      width: 100%;
 }
 .link.Home{
   text-decoration: none;
