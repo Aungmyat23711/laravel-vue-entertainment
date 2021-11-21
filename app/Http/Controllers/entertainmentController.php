@@ -174,7 +174,7 @@ class entertainmentController extends Controller
     }
     function getaframedata()
     {  
-        $data=animedata::paginate(6);
+        $data=animedata::orderBy('id','desc')->paginate(6);
         return $data;
     }
     function getsearchdata()
@@ -206,7 +206,7 @@ class entertainmentController extends Controller
     }
     function getaframeType()
     {
-        $data=type::all();
+        $data=type::orderBy('type_name')->get();
         return $data;
     }
     function getdatabytype($name)

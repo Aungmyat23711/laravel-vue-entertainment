@@ -127,7 +127,7 @@
                                         <span class="red--text">{{inputerror}}</span>
                                        
                                         <v-responsive class="text-center">
-                                            <img src="#" alt="" id="img" style="max-height:150px;max-width:250px;">
+                                            <img src="#" alt="" id="img" style="max-height:200px;max-width:250px;">
                                         </v-responsive>
                                     </v-flex>
                                     <v-flex xs12 md12 class="pa-3">

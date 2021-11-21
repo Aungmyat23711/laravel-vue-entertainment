@@ -187,7 +187,7 @@ methods:{
       this.$Progress.start();
       this.issearch=false;
       this.searchisnull=false; 
-      this.searchdatanull=false;       
+      this.searchdatanull=false;   
       if(JSON.stringify(this.datas)==='{}')
       {
         this.objnull=true;
@@ -198,9 +198,11 @@ methods:{
       
       await axios.get(`/aframe/getdata?page=${page}`)
       .then((resp)=>{
+        this.search=""  
           this.datas=resp.data;
           this.objnull=false;
           this.type=this.search;
+          this.notavaliable=false;  
           this.$Progress.finish();
       })
       
@@ -223,7 +225,7 @@ methods:{
        else{
          this.searchdatanull=false;
        }
-       if(this.search==null)
+       if(this.search==null || this.search=="")
        {
          this.type="please write something to search";
          this.searchisnull=true;
@@ -252,6 +254,7 @@ methods:{
     {
       await axios.get('/aframe/getdatabytype/'+name)
       .then((resp)=>{
+        this.search=""
         this.type=name;
         this.issearch=false;
         this.datas=resp.data;
