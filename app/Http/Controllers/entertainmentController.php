@@ -229,4 +229,18 @@ class entertainmentController extends Controller
         $data->email=$req->email;
         $data->save();
     }
+    function aframelogin(Request $req)
+    { 
+        $req->validate([
+            'password'=>['required'],
+            'email'=>['required','email']
+        ]);
+      $data=aframeuser::where('email',$req->email)->first();
+      if(!$data || $req->password!=$data->password)
+      {
+          return response()->json(['message'=>'User name or password not match']);
+      }else{
+          return $data;
+      }  
+    }
 }

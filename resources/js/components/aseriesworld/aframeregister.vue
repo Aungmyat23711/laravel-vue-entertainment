@@ -186,6 +186,9 @@ methods:{
     await axios.post('/aframe/register/adduser',formdata)
     .then((resp)=>{
       this.loading4=false;
+      this.email="",
+      this.password="",
+      this.cpassword=""
       this.step=this.step+1
     })
   }
@@ -203,6 +206,7 @@ methods:{
     background: url('/anime/wall.jpg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
+        background-attachment: fixed;
 }
 .item{
     background: white;

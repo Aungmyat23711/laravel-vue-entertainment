@@ -64,6 +64,8 @@ Route::get('/aframe/getdatabytype/{name}',[entertainmentController::class,'getda
 Route::get('/aframe/getsearchdata',[entertainmentController::class,'getsearchdata']);
 Route::view('/aframe/register','laravel+vue/aseriesworld');
 Route::match(['get','post'],'/aframe/register/adduser',[entertainmentController::class,'adduser']);
+Route::view('/aframe/login','laravel+vue/aseriesworld');
+Route::match(['get','post'],'/aframe/login/matchuser',[entertainmentController::class,'aframelogin']);
 
 //for chat
 Route::view('/animeframe/chatpage','laravel+vue/chat');

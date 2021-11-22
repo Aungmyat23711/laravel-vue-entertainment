@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rancho&effect=	fire-animation|ice|distressed|outline">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.8.95/css/materialdesignicons.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
 
     </style>
@@ -27,8 +28,10 @@
         
     </div>
     
-    <script src="{{mix('js/app.js')}}">
-
-    </script>
+    <script src="{{mix('js/app.js')}}"> </script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 </body>
 </html>

@@ -76,6 +76,7 @@ import Adminchatting from './components/UI/chatting'
 import Aframehome from './components/aseriesworld/aframehome'
 import Aframeinfo from './components/aseriesworld/aframeinfo'
 import Aframeregister from './components/aseriesworld/aframeregister'
+import Aframelogin from './components/aseriesworld/aframelogin'
 import { mapGetters } from 'vuex';
 
 
@@ -177,6 +178,11 @@ const routes=[
     name:'aframeregister',
     path:'/aframe/register',
     component:Aframeregister,
+  },
+  {
+    name:'aframelogin',
+    path:'/aframe/login',
+    component:Aframelogin,
   }
 
 ]

@@ -18,7 +18,7 @@
                      <span>Register</span>
                      <v-icon>how_to_reg</v-icon>
                    </v-btn>
-                   <v-btn text class="white--text">
+                   <v-btn text class="white--text" to="/aframe/login" style="text-decoration:none;">
                       <span>Login</span>
                       <v-icon>login</v-icon>
                    </v-btn>
