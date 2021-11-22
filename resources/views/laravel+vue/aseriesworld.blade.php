@@ -15,10 +15,16 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rancho&effect=	fire-animation|ice|distressed|outline">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.8.95/css/materialdesignicons.css">
+    <style>
+
+    </style>
 </head>
 <body>
     <div id="entertainment">
-        <aseriesworld-component></aseriesworld-component>
+      
+             <aseriesworld-component></aseriesworld-component>
+    
+        
     </div>
     
     <script src="{{mix('js/app.js')}}">

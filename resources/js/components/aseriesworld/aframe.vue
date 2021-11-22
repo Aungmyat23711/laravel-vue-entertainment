@@ -14,6 +14,14 @@
                        </span>
                    </v-toolbar-title>
                    <v-spacer></v-spacer>
+                   <v-btn text class="white--text" to="/aframe/register" style="text-decoration:none;">
+                     <span>Register</span>
+                     <v-icon>how_to_reg</v-icon>
+                   </v-btn>
+                   <v-btn text class="white--text">
+                      <span>Login</span>
+                      <v-icon>login</v-icon>
+                   </v-btn>
                    <v-btn text class="white--text">
                       <span>Logout</span>
                       <v-icon>logout</v-icon>
@@ -63,6 +71,8 @@ data()
     drawer:false,
     links:[
       {icon:'home',title:'Home',to:'/aframe/home'},
+      {icon:'chat',title:'Contact',to:'/aframe/contact'},
+    {icon:'portrait',title:'About',to:'/aframe/about'}
     ]
   }
 }
@@ -75,6 +85,12 @@ data()
       width: 100%;
 }
 .link.Home{
+  text-decoration: none;
+}
+.link.Contact{
+  text-decoration: none;
+}
+.link.About{
   text-decoration: none;
 }
 </style>

@@ -277,6 +277,7 @@ mounted()
 </script>
 
 <style >
+
 .hoverimg:hover .image{
     opacity: 0.3;
     cursor: pointer;

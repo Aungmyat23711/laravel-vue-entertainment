@@ -75,6 +75,7 @@ import Privateroom from './components/UI/privateroom'
 import Adminchatting from './components/UI/chatting'
 import Aframehome from './components/aseriesworld/aframehome'
 import Aframeinfo from './components/aseriesworld/aframeinfo'
+import Aframeregister from './components/aseriesworld/aframeregister'
 import { mapGetters } from 'vuex';
 
 
@@ -171,6 +172,11 @@ const routes=[
     path:'/aframe/info/:id',
     component:Aframeinfo,
     props:true,
+  },
+  {
+    name:'aframeregister',
+    path:'/aframe/register',
+    component:Aframeregister,
   }
 
 ]

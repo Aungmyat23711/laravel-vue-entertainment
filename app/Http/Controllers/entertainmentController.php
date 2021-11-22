@@ -9,6 +9,7 @@ use App\Models\team;
 use App\Models\season;
 use App\Models\episode;
 use App\Models\type;
+use App\Models\aframeuser;
 class entertainmentController extends Controller
 {
     //
@@ -218,5 +219,14 @@ class entertainmentController extends Controller
                        ->orWhere('type5',$name)
                        ->paginate(6);
         return $data;
+    }
+    function adduser(Request $req)
+    {
+        $data=new aframeuser;
+        $data->first_name=$req->first_name;
+        $data->last_name=$req->last_name;
+        $data->password=$req->password;
+        $data->email=$req->email;
+        $data->save();
     }
 }
