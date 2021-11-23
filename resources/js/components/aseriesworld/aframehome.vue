@@ -1,6 +1,7 @@
 <template>
   <div>
-    <vue-progress-bar></vue-progress-bar>
+    <div v-if="frameuser">
+        <vue-progress-bar></vue-progress-bar>
     <v-container fluid  v-if="this.objnull==false">
            <v-card>
     <v-tabs
@@ -46,15 +47,18 @@
       <v-row v-if="notavaliable==false">
           <v-col cols="6" sm="4" md="2" v-for="tab in datas.data" :key="tab.id" class="flexcard" height="100%">
                <v-card dark >
-                  <v-responsive class="text-center pt-3 hoverimg" @click="goinfo(tab.id)">
+                 <div data-aos="zoom-in">
+                                     <v-responsive class="text-center pt-3 hoverimg" @click="goinfo(tab.id)">
                       <img :src="`/anime/${tab.photo}`" class="image" alt="" style="height:260px;width:210px;">
                       <div class="icon">
                          <v-icon size="50" class="font-effect-fire-animation orange--text">play_circle</v-icon>
                       </div>
                   </v-responsive>
+                 </div>
+
                   <v-divider></v-divider>
                    <v-card-text style="height:90px;">
-                       <h5 @click="goinfo(tab.id)" :class="{'font-effect-fire-animation': effect===tab.name}" style="cursor:pointer;" @mouseout="effect=''" @mouseover="active(tab)">{{tab.name}}</h5>
+                       <h6 @click="goinfo(tab.id)" :class="{'font-effect-fire-animation': effect===tab.name}" style="cursor:pointer;" @mouseout="effect=''" @mouseover="active(tab)">{{tab.name}}</h6>
                    </v-card-text>
                </v-card>
           </v-col>
@@ -84,12 +88,14 @@
       <v-row v-if="notavaliable==false">
           <v-col cols="6" sm="4" md="2" v-for="tab in searchdata.data" :key="tab.id" class="flexcard" height="100%">
                <v-card dark >
-                  <v-responsive class="text-center pt-3 hoverimg" @click="goinfo(tab.id)">
+                  <div data-aos="zoom-in">
+                    <v-responsive class="text-center pt-3 hoverimg" @click="goinfo(tab.id)">
                       <img :src="`/anime/${tab.photo}`" class="image" alt="" style="height:260px;width:210px;">
                       <div class="icon">
                          <v-icon size="50" class="font-effect-fire-animation orange--text">play_circle</v-icon>
                       </div>
                   </v-responsive>
+                  </div>
                   <v-divider></v-divider>
                    <v-card-text style="height:90px;">
                        <h6 @click="goinfo(tab.id)" :class="{'font-effect-fire-animation': effect===tab.name}" style="cursor:pointer;" @mouseout="effect=''" @mouseover="active(tab)">{{tab.name}}</h6>
@@ -159,7 +165,21 @@
          </v-col>
        </v-row>
   </v-container>
-  
+    </div>
+    <div v-if="!frameuser">
+      <div class="frame">
+          <div class="item">
+              <v-card class="orange">
+                <v-card-title class="justify-center">
+                  <span class="headline white--text">Please login to continue!</span>
+                </v-card-title>
+                <v-card-text class="justify-center text-center">
+                  <v-btn to="/aframe/login" class="orange white--text" style="text-decoration:none;">Login</v-btn>
+                </v-card-text>
+              </v-card>
+          </div>
+      </div>
+    </div>   
   </div>
 </template>
 
@@ -276,7 +296,7 @@ mounted()
      this.getdata();
 },
 computed:{
-  ...mapGetters(['animetype'])
+  ...mapGetters(['frameuser'])
 }
 }
 </script>
@@ -311,5 +331,17 @@ ul.pagination{
   border-radius: 20px;
   padding: 50px;
   background: orange;
+}
+.frame{
+  width: 100%;
+  height: 500px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.item{
+  width: 40%;
+  height: auto;
+  border-radius: 10px;
 }
 </style>

@@ -180,11 +180,27 @@ const routes=[
     name:'aframeregister',
     path:'/aframe/register',
     component:Aframeregister,
+    beforeEnter:(to,from,next)=>{
+     if(store.getters.frameuser)
+     {
+       next('/aframe/home')
+     }else{
+       next()
+     }
+    }
   },
   {
     name:'aframelogin',
     path:'/aframe/login',
     component:Aframelogin,
+    beforeEnter:(to,from,next)=>{
+     if(store.getters.frameuser)
+     {
+       next('/aframe/home')
+     }else{
+       next()
+     }
+    }
   },
   {
     name:'aframetype',
@@ -259,6 +275,10 @@ const app = new Vue({
     // computed:{
     //   ...mapGetters(['adminInfo'])
     // },
+    // mounted()
+    // {
+    //   console.warn('store',store)
+    // }
     
 });
 

@@ -6,10 +6,10 @@
                <v-app-bar dark app flat>
                    <v-app-bar-nav-icon dark @click="drawer=!drawer"></v-app-bar-nav-icon>
                    <v-toolbar-title>
-                      <span class="font-effect-outline text-uppercase " style="font-size:25px;">
+                      <span class="font-effect-outline text-uppercase size25">
                             A_Series
                        </span>
-                       <span class="font-effect-fire-animation orange--text font-weight-bold" style="font-size:25px;">
+                       <span class="font-effect-fire-animation orange--text font-weight-bold size25">
                              World
                        </span>
                    </v-toolbar-title>
@@ -46,8 +46,8 @@
              </nav>
        </header>
        <v-main dark class="user">
-         
-               <router-view></router-view>
+               <router-view ></router-view>
+              
        </v-main>
        <v-footer style="background:black;">
             <v-row justify="center" class="black my-3 white--text">
@@ -93,7 +93,7 @@ methods:{
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .v-main.user{
       background: rgb(23, 24, 26);
       width: 100%;
@@ -106,5 +106,33 @@ methods:{
 }
 .link.About{
   text-decoration: none;
+}
+.frame{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.item{
+  width: 500px;
+  height: 200px;
+  border: 1px solid white;
+  border-radius: 10px;
+}
+.rad{
+  border-radius: 10px;
+}
+.nal{
+  height: 200px;
+  border-radius: 10px;
+}
+.size25{
+  font-size:25px;
+}
+@media only screen and (max-width:600px){
+  .size25{
+    font-size: 20px;
+  }
 }
 </style>

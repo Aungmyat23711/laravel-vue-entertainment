@@ -1,7 +1,13 @@
 <template>
-  <div style="padding-bottom:150px;">
+<div>
+     <div style="padding-bottom:150px;" v-if="frameuser">
       <div  v-if="this.notready==false">
  <v-container fluid class="ma-5" v-for="info in eachinfo" :key="info.id">
+      <v-row>
+               <v-col cols="12" md="6">
+                     <v-btn  dark text to="/aframe/home" style="text-decoration:none;">Back</v-btn>
+               </v-col>
+           </v-row>
             <v-row>
                 <v-col cols="12" md="4" class="text-center">
                    <img :src="`/anime/${info.photo}`" alt="" style="width:250px;height:300px;">
@@ -14,11 +20,11 @@
                     <div class="title">{{info.total_episode}}</div><hr>
                     <div class="headline orange--text">Genre</div>
                     <div class="title">
-                     <v-btn text class="my-4" dark @click="sendtype(info.type1)">{{info.type1}}</v-btn>
-                     <v-btn text class="my-4" dark @click="sendtype(info.type2)">{{info.type2}}</v-btn>       
-                     <v-btn text class="my-4" dark @click="sendtype(info.type3)">{{info.type3}}</v-btn>   
-                     <v-btn text class="my-4" dark @click="sendtype(info.type4)">{{info.type4}}</v-btn>   
-                     <v-btn text class="my-4" dark @click="sendtype(info.type5)">{{info.type5}}</v-btn>   
+                     <v-btn text class="my-4" :disabled="info.type1===null" dark @click="sendtype(info.type1)">{{info.type1}}</v-btn>
+                     <v-btn text class="my-4" :disabled="info.type2===null" dark @click="sendtype(info.type2)">{{info.type2}}</v-btn>       
+                     <v-btn text class="my-4" :disabled="info.type3===null" dark @click="sendtype(info.type3)">{{info.type3}}</v-btn>   
+                     <v-btn text class="my-4" :disabled="info.type4===null" dark @click="sendtype(info.type4)">{{info.type4}}</v-btn>   
+                     <v-btn text class="my-4" :disabled="info.type5===null" dark @click="sendtype(info.type5)">{{info.type5}}</v-btn>   
                     </div>
                 </v-col>
             </v-row>
@@ -64,11 +70,6 @@
             </v-expansion-panels>
                </v-col>
            </v-row>
-           <v-row>
-               <v-col cols="12" md="6">
-                     <v-btn to="/aframe/home">Back</v-btn>
-               </v-col>
-           </v-row>
       </v-container>
       </div>
      
@@ -94,10 +95,27 @@
        </v-row>
   </v-container>
   </div>
+    <div v-if="!frameuser">
+      <div class="frame">
+          <div class="item">
+              <v-card class="orange">
+                <v-card-title class="justify-center">
+                  <span class="headline white--text">Please login to continue!</span>
+                </v-card-title>
+                <v-card-text class="justify-center text-center">
+                  <v-btn to="/aframe/login" class="orange white--text" style="text-decoration:none;">Login</v-btn>
+                </v-card-text>
+              </v-card>
+          </div>
+      </div>
+    </div>   
+</div>
+ 
 </template>
 
 <script>
 import {eventBus} from './../../app'
+import {mapGetters} from 'vuex'
 export default {
 data()
 {
@@ -147,6 +165,9 @@ mounted()
     this.geteachinfo();
     this.getseasoninfo();
     this.calldata();
+},
+computed:{
+    ...mapGetters(['frameuser'])
 }
 }
 </script>

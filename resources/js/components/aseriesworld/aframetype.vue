@@ -1,5 +1,6 @@
 <template>
-  <div>
+<div>
+   <div v-if="frameuser">
       <v-container fluid class="pa-5">
           <v-row>
               <v-col cols="4" md="8" >
@@ -52,9 +53,26 @@
        </v-row>
   </v-container>
   </div>
+  <div v-if="!frameuser">
+      <div class="frame">
+          <div class="item">
+              <v-card class="orange">
+                <v-card-title class="justify-center">
+                  <span class="headline white--text">Please login to continue!</span>
+                </v-card-title>
+                <v-card-text class="justify-center text-center">
+                  <v-btn to="/aframe/login" class="orange white--text" style="text-decoration:none;">Login</v-btn>
+                </v-card-text>
+              </v-card>
+          </div>
+      </div>
+    </div>   
+</div>
+ 
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
 data()
 {
@@ -88,6 +106,9 @@ methods:{
 mounted()
 {
     this.getTypedata();
+},
+computed:{
+  ...mapGetters(['frameuser'])
 }
 }
 </script>
