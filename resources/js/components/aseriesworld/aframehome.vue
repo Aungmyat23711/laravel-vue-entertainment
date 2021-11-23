@@ -92,7 +92,7 @@
                   </v-responsive>
                   <v-divider></v-divider>
                    <v-card-text style="height:90px;">
-                       <h5 @click="goinfo(tab.id)" :class="{'font-effect-fire-animation': effect===tab.name}" style="cursor:pointer;" @mouseout="effect=''" @mouseover="active(tab)">{{tab.name}}</h5>
+                       <h6 @click="goinfo(tab.id)" :class="{'font-effect-fire-animation': effect===tab.name}" style="cursor:pointer;" @mouseout="effect=''" @mouseover="active(tab)">{{tab.name}}</h6>
                    </v-card-text>
                </v-card>
           </v-col>
@@ -164,6 +164,8 @@
 </template>
 
 <script>
+import {eventBus} from './../../app'
+import {mapGetters} from 'vuex'
 export default {
 data()
 {
@@ -243,7 +245,7 @@ methods:{
     {
        this.$router.push('/aframe/info/'+id)
     },
-    async getTpye()
+    async getType()
     {
       await axios.get('/aframe/getType')
       .then((resp)=>{
@@ -270,9 +272,12 @@ methods:{
 },
 mounted()
 {
-    this.getdata();
-    this.getTpye();
+    this.getType();
+     this.getdata();
 },
+computed:{
+  ...mapGetters(['animetype'])
+}
 }
 </script>
 

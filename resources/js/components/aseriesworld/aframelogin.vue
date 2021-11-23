@@ -57,6 +57,7 @@ methods:{
         formdata.append('password',this.password);
         await axios.post('/aframe/login/matchuser',formdata)
         .then((resp)=>{
+            this.$store.dispatch('setuser',resp.data)
             const Toast = Swal.mixin({
   toast: true,
   position: 'top-right',

@@ -14,7 +14,8 @@
                        </span>
                    </v-toolbar-title>
                    <v-spacer></v-spacer>
-                   <v-btn text class="white--text" to="/aframe/register" style="text-decoration:none;">
+                  <div v-if="!frameuser">
+                     <v-btn text class="white--text" to="/aframe/register" style="text-decoration:none;">
                      <span>Register</span>
                      <v-icon>how_to_reg</v-icon>
                    </v-btn>
@@ -22,10 +23,13 @@
                       <span>Login</span>
                       <v-icon>login</v-icon>
                    </v-btn>
-                   <v-btn text class="white--text">
+                  </div>
+                   <div v-if="frameuser">
+                     <v-btn text class="white--text" @click="logout">
                       <span>Logout</span>
                       <v-icon>logout</v-icon>
                    </v-btn>
+                   </div>
                </v-app-bar>
               <v-navigation-drawer app v-model="drawer" dark>
                 <v-list>
@@ -64,6 +68,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
 data()
 {
@@ -74,6 +79,15 @@ data()
       {icon:'chat',title:'Contact',to:'/aframe/contact'},
     {icon:'portrait',title:'About',to:'/aframe/about'}
     ]
+  }
+},
+computed:{
+  ...mapGetters(['frameuser'])
+},
+methods:{
+  logout()
+  {
+    this.$store.dispatch('setuser',null);
   }
 }
 }

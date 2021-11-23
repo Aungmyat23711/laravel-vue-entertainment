@@ -14,11 +14,11 @@
                     <div class="title">{{info.total_episode}}</div><hr>
                     <div class="headline orange--text">Genre</div>
                     <div class="title">
-                     <v-btn text class="my-4" dark>{{info.type1}}</v-btn>
-                     <v-btn text class="my-4" dark>{{info.type2}}</v-btn>       
-                     <v-btn text class="my-4" dark>{{info.type3}}</v-btn>   
-                     <v-btn text class="my-4" dark>{{info.type4}}</v-btn>   
-                     <v-btn text class="my-4" dark>{{info.type5}}</v-btn>   
+                     <v-btn text class="my-4" dark @click="sendtype(info.type1)">{{info.type1}}</v-btn>
+                     <v-btn text class="my-4" dark @click="sendtype(info.type2)">{{info.type2}}</v-btn>       
+                     <v-btn text class="my-4" dark @click="sendtype(info.type3)">{{info.type3}}</v-btn>   
+                     <v-btn text class="my-4" dark @click="sendtype(info.type4)">{{info.type4}}</v-btn>   
+                     <v-btn text class="my-4" dark @click="sendtype(info.type5)">{{info.type5}}</v-btn>   
                     </div>
                 </v-col>
             </v-row>
@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import {eventBus} from './../../app'
 export default {
 data()
 {
@@ -135,6 +136,10 @@ methods:{
       this.idseasons=resp.data;
          
      })
+ },
+ async sendtype(type)
+ {
+     this.$router.push(`/aframe/home/${type}/${this.id}`)
  }
 },
 mounted()

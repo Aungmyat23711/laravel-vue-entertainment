@@ -243,4 +243,14 @@ class entertainmentController extends Controller
           return $data;
       }  
     }
+    function getTypedata($name)
+    {
+        $data=animedata::where('type1',$name)
+        ->orWhere('type2',$name)
+        ->orWhere('type3',$name)
+        ->orWhere('type4',$name)
+        ->orWhere('type5',$name)
+        ->get();
+return $data;
+    }
 }
