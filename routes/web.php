@@ -69,6 +69,10 @@ Route::match(['get','post'],'/aframe/login/matchuser',[entertainmentController::
 Route::view('/aframe/home/{type}/{id}','laravel+vue/aseriesworld');
 Route::get('/aframe/getTypedata/{type}',[entertainmentController::class,'getTypedata']);
 Route::view('/aframe/typeinfo/{type}/{id}','laravel+vue/aseriesworld');
+Route::view('/aframe/contact','laravel+vue/aseriesworld');
+Route::match(['get','post'],'/aframe/contact/addfeedback',[entertainmentController::class,'addfeedback']);
+Route::delete('/aframe/episode/delete/{id}',[entertainmentController::class,'delep']);
+Route::put('/aframe/episode/update/{id}',[entertainmentController::class,'epupdate']);
 
 //for chat
 Route::view('/animeframe/chatpage','laravel+vue/chat');

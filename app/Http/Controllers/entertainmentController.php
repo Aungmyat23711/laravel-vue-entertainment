@@ -10,6 +10,7 @@ use App\Models\season;
 use App\Models\episode;
 use App\Models\type;
 use App\Models\aframeuser;
+use App\Models\contact;
 class entertainmentController extends Controller
 {
     //
@@ -251,6 +252,28 @@ class entertainmentController extends Controller
         ->orWhere('type4',$name)
         ->orWhere('type5',$name)
         ->get();
-return $data;
+        return $data;
+    }
+    function addfeedback(Request $req)
+    {
+       $data=new contact;
+       $data->fname=$req->fname;
+       $data->email=$req->email;
+       $data->message=$req->message;
+       $data->save();
+    }
+    function delep($id)
+    {
+        return DB::delete('delete from episodes where id=?',[$id]);
+    }
+    function epupdate($id,Request $req)
+    {
+        $data=episode::find($id);
+        $data->episode=$req->episode;
+        $data->link=$req->link;
+        $data->ep_name=$req->ep_name;
+        $data->anime_id=$req->anime_id;
+        $data->season_id=$req->season_id;
+        $data->save();
     }
 }

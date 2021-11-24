@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta id="token" name="csrf-token" content="{{ csrf_token() }}">
-    <title>Myanmar Exchange</title>
+    <title>Admin Series World</title>
+    <link rel="icon" href="/anime/black.ico" type="image/x-icon" />
     <link rel="stylesheet" href="{{mix('css/app.css')}}">
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" 

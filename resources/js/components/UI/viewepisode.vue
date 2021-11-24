@@ -33,18 +33,33 @@
                  </v-text-field> 
               </v-flex>
               
-                    <v-btn class="info white--text ml-6 mt-4" @click="addepisode">  
-                        <span>Add</span>
-                        <v-icon>add</v-icon>
+                    <v-btn class="info white--text ml-6 mt-4" @click="isedit ? editep():addepisode()">  
+                        <span>{{isedit ? 'Update':'Add'}}</span>
+                        <v-icon>{{isedit ? 'update':'add'}}</v-icon>
                     </v-btn> 
                      <v-btn style="text-decoration:none;" class="red white--text ml-6 mt-4" :to="`/animeframe/myprojects/viewseason/${mid}`">Back</v-btn>
               
           </v-layout>
           <v-layout row wrap>
                <v-flex xs4 md2 v-for="ep in episodes" :key="ep.id" class="my-2">
-                    <v-btn text to="#" class="primary--text">
-                        <span>{{ep.episode}} . {{ep.ep_name}}</span>
-                    </v-btn>
+                   <v-dialog :v-model="`dialog`+ep.id" width="600px" height="auto">
+                       <template v-slot:activator={on}>
+                              <v-btn text class="primary--text"  v-on="on">
+                               <span>{{ep.episode}} . {{ep.ep_name}}</span>
+                              </v-btn>
+                       </template>
+                      <v-row>
+                          <v-col cols="12" md="12">
+                                  <v-card>
+                                    <v-card-text class="text-center">
+                                        <v-btn class="primary">Go</v-btn>
+                                        <v-btn class="info ml-5" @click="showeditep(ep)">Edit</v-btn>
+                                        <v-btn class="red white--text ml-5" @click="delep(ep.id)">Delete</v-btn>
+                                    </v-card-text>
+                                 </v-card>
+                          </v-col>
+                      </v-row>
+                   </v-dialog>
                </v-flex>
           </v-layout>
       </v-container>
@@ -56,6 +71,7 @@ export default {
 data()
 {
     return{
+    
     datas:[],
     mid:this.$route.params.mid,
     sid:this.$route.params.sid,
@@ -64,6 +80,8 @@ data()
     episode:'',
     link:'',
     episodes:[],
+    isedit:false,
+    epid:''
     }
 },
 methods:{
@@ -118,6 +136,70 @@ methods:{
         await axios.get(`/animeframe/getepisode/${this.sid}`)
         .then((resp)=>{
          this.episodes=resp.data;
+        })
+    },
+    async showeditep(ep)
+    {
+       this.episode=ep.episode;
+       this.link=ep.link;
+       this.name=ep.ep_name;
+       this.epid=ep.id;
+       this.isedit=true;
+    },
+     async editep()
+    {
+      var formdata=new FormData()
+      formdata.append('episode',this.episode)
+        formdata.append('link',this.link)
+        formdata.append('ep_name',this.name)
+        formdata.append('anime_id',this.mid)
+        formdata.append('season_id',this.sid)
+        formdata.append('_method','PUT');
+        await axios.post(`/aframe/episode/update/${this.epid}`,formdata)
+        .then((resp)=>{
+             this.episode="";
+             this.link="";
+             this.name="";
+             this.getepisode();
+            const Toast=Swal.mixin({
+                toast:true,
+                iconColor:'white',
+                position:'top-right',
+                customClass:{
+                    popup:'colored-toast'
+                },
+                showConfirmButton:false,
+                timerProgressBar:true,
+                timer:1500
+            })
+            Toast.fire({
+                icon:'success',
+                title:'Edited'
+            })
+        })
+    },
+    async delep(id)
+    {
+        var formdata=new FormData();
+        formdata.append('_method','DELETE');
+        await axios.post(`/aframe/episode/delete/${id}`,formdata)
+        .then((resp)=>{
+            this.getepisode();
+            const Toast=Swal.mixin({
+              toast:true,
+              position:'top-right',
+              iconColor:'red',
+              customClass:{
+                  popup:'colored-toast'
+              },
+              showConfirmButton:false,
+              timer:1500,
+              timerProgressBar:true,
+            })
+            Toast.fire({
+                icon:'error',
+                title:'Deleted'
+            })
         })
     }
 },

@@ -79,6 +79,7 @@ import Aframeregister from './components/aseriesworld/aframeregister'
 import Aframelogin from './components/aseriesworld/aframelogin'
 import Aframetype from './components/aseriesworld/aframetype'
 import Aframetypeinfo from './components/aseriesworld/aframetypeinfo'
+import Aframecontact from './components/aseriesworld/aframecontact'
 import { mapGetters } from 'vuex';
 
 
@@ -213,6 +214,11 @@ const routes=[
     path:'/aframe/typeinfo/:type/:id',
     component:Aframetypeinfo,
     props:true,
+  },
+  {
+    name:'aframecontact',
+    path:'/aframe/contact',
+    component:Aframecontact
   }
 
 ]

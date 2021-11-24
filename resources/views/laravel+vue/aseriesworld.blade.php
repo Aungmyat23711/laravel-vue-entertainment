@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta id="token" name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="/anime/favicon.ico" type="image/x-icon" />
     <title>A_Series World</title>
-    <link rel="shortcut icon" href="/anime/avatar1.jpg" type="image/x-icon" />
+    
     <link rel="stylesheet" href="{{mix('css/app.css')}}">
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" 
     integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
