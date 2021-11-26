@@ -11,6 +11,7 @@ use App\Models\episode;
 use App\Models\type;
 use App\Models\aframeuser;
 use App\Models\contact;
+use App\Events\ChatEvent;
 class entertainmentController extends Controller
 {
     //
@@ -223,12 +224,29 @@ class entertainmentController extends Controller
     }
     function adduser(Request $req)
     {
+        if($req->useravatar==null)
+        {
         $data=new aframeuser;
         $data->first_name=$req->first_name;
         $data->last_name=$req->last_name;
         $data->password=$req->password;
         $data->email=$req->email;
+        $data->useravatar='user.png';
         $data->save();
+        }else{
+            $file=$req->useravatar;
+            $ext=$file->getClientOriginalExtension();
+            $photo=time().'.'.$ext;
+            $path=$file->move('anime/',$photo);
+            $data=new aframeuser;
+            $data->first_name=$req->first_name;
+            $data->last_name=$req->last_name;
+            $data->password=$req->password;
+            $data->email=$req->email;
+            $data->useravatar=$photo;
+            $data->save();
+        }
+      
     }
     function aframelogin(Request $req)
     { 
@@ -275,5 +293,26 @@ class entertainmentController extends Controller
         $data->anime_id=$req->anime_id;
         $data->season_id=$req->season_id;
         $data->save();
+    }
+    function chatting(Request $req)
+    {
+        $message=$req->message;
+        $main_id=$req->main_id;
+        $user=$req->user;
+        $this->saveToSession($req,$main_id);
+        event(new ChatEvent($message,$main_id,$user));
+      
+    }
+    function saveToSession(Request $req,$id)
+    {
+         $req->session()->put("chat$id",$req->chat);
+    }
+    function getOldMessage($id)
+    {
+        return session("chat$id");
+    }
+    function delsession($id)
+    {
+        return session()->forget("chat$id");
     }
 }

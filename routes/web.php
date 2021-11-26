@@ -73,6 +73,13 @@ Route::view('/aframe/contact','laravel+vue/aseriesworld');
 Route::match(['get','post'],'/aframe/contact/addfeedback',[entertainmentController::class,'addfeedback']);
 Route::delete('/aframe/episode/delete/{id}',[entertainmentController::class,'delep']);
 Route::put('/aframe/episode/update/{id}',[entertainmentController::class,'epupdate']);
+Route::match(['get','post'],'/aframe/send',[entertainmentController::class,'chatting']);
+Route::get('/check/{id}',function($id){
+    return session("chat$id");
+});
+Route::get('/getOldMessage/{id}',[entertainmentController::class,'getOldMessage']);
+Route::delete('/delsession/{id}',[entertainmentController::class,'delsession']);
+Route::match(['get','post'],'/saveToSession/{id}',[entertainmentController::class,'saveToSession']);
 
 //for chat
 Route::view('/animeframe/chatpage','laravel+vue/chat');

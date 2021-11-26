@@ -36,6 +36,10 @@
                     <v-btn class="info white--text ml-6 mt-4" @click="isedit ? editep():addepisode()">  
                         <span>{{isedit ? 'Update':'Add'}}</span>
                         <v-icon>{{isedit ? 'update':'add'}}</v-icon>
+                    </v-btn>
+                    <v-btn v-if="isedit==true" class="info white--text ml-6 mt-4" @click="clearedit">
+                        <span>Add</span>
+                        <v-icon>add</v-icon>
                     </v-btn> 
                      <v-btn style="text-decoration:none;" class="red white--text ml-6 mt-4" :to="`/animeframe/myprojects/viewseason/${mid}`">Back</v-btn>
               
@@ -111,8 +115,8 @@ methods:{
         await axios.post('/animeframe/addepisode',formdata)
         .then((resp)=>{
             this.episode="";
-            this.link="",
-            this.name="",
+            this.link="";
+            this.name="";
             this.getepisode()
             const Toast=Swal.mixin({
                 toast:true,
@@ -137,6 +141,13 @@ methods:{
         .then((resp)=>{
          this.episodes=resp.data;
         })
+    },
+    clearedit()
+    {
+            this.episode="";
+            this.link="";
+            this.name="";
+            this.isedit=false;
     },
     async showeditep(ep)
     {

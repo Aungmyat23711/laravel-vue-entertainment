@@ -19,9 +19,11 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Vuetify from '../plugins/vuetify'
 import VueProgressBar from 'vue-progressbar'
+import VueChatScroll from 'vue-chat-scroll'
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueProgressBar, options)
+Vue.use(VueChatScroll)
 const options = {
   color: '#bffaf3',
   failedColor: '#874b4b',
@@ -256,7 +258,7 @@ const app = new Vue({
     //      this.chat.color.push('success')
     //      axios.post('/animeframe/chatpage/send',{
     //        message:this.message,
-    //        user:this.adminInfo,
+    //        user:this.adminInfo, 
     //        userId:this.adminInfo.room_id
     //      })
     //      .then((resp)=>{

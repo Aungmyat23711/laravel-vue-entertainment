@@ -20,13 +20,13 @@ class ChatEvent implements ShouldBroadcast
      * @return void
      */
     public $message;
+    public $main_id;
     public $user;
-    public $userId;
-    public function __construct($message,$user,$userId)
+    public function __construct($message,$main_id,$user)
     {
         $this->message=$message;
+        $this->main_id=$main_id;
         $this->user=$user;
-        $this->userId=$userId;
         $this->dontBroadcastToCurrentUser();
     }
 
@@ -37,11 +37,11 @@ class ChatEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-           return new Channel("chatting.{$this->userId}"); 
+           return new Channel("chat.{$this->main_id}"); 
         
     }
     // public function broadcastAs()
     // {
     //     return "chatting.user";
-    // }
+    // } 
 }

@@ -71,6 +71,54 @@
                </v-col>
            </v-row>
       </v-container>
+      <v-container class='mt5' fluid>
+        <v-row>
+            <v-col cols="12" md="6" offset-md="3">
+              <h2 class="white--text">Message Box</h2>
+            </v-col>
+        </v-row>
+            <v-row>
+              <v-col cols="12" md="6" offset-md="3">
+                 <v-form>
+                   <v-textarea
+                   solo
+                   v-model="message"
+                   placeholder="write some text"
+                   @keyup.enter="send"
+                   >
+
+                   </v-textarea>
+                   <v-btn small @click="delsession">Delete Session</v-btn>
+                 </v-form>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" md="6" offset-md="3">
+                  <v-list style="border-radius:10px;" 
+                  dark
+                  class="overflow-y-auto"
+                  max-height="400"
+                   id="bottom"
+                  >
+                    <v-list-item v-for="chatting,index in chat.message" :key="chatting.index">
+                      <v-list-item-action>
+                        <v-avatar class="mb-6" size="60">
+                         <img :src="`/anime/${chat.icon[index]}`" alt="" >
+                        </v-avatar>
+                      </v-list-item-action>
+                      <v-list-item-content >
+                        <v-list-item-title class='pa-5' :class="chat.className[index]" style="border-radius:10px;">
+                            <span style="font-size:18px;" class="white--text">{{chatting}}</span>
+                        </v-list-item-title> 
+                         <v-list-item-title class="mt-2">
+                          <small class="badge float-right" :class="chat.badge[index]">{{chat.user[index]}}</small>
+                         </v-list-item-title>   
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list>
+              </v-col>
+            </v-row>
+      </v-container>
       </div>
      
        <v-container v-if="this.notready==true" style="margin-top:150px;">
@@ -124,10 +172,22 @@ data()
       eachinfo:[],
       eachseasons:[],
       idseasons:[],
-      notready:false
+      notready:false,
+      
+      
+      message:'',
+      chat:{
+        className:[],
+        badge:[],
+        message:[],
+        user:[],
+        icon:[]
+      },
+      scrollInvoked: 0,
     }
 },
 methods:{
+   
  async geteachinfo()
  {
      if(this.eachinfo.length===0){
@@ -158,13 +218,93 @@ methods:{
  async sendtype(type)
  {
      this.$router.push(`/aframe/home/${type}/${this.id}`)
- }
+ },
+ async send()
+ {
+    if(this.message.length!=0)
+    {
+      this.chat.className.push('primary')
+      this.chat.badge.push('badge-primary')
+      this.chat.message.push(this.message)
+      this.chat.icon.push(this.frameuser.useravatar)
+      this.chat.user.push('you')
+      await axios.post('/aframe/send',{
+        message:this.message,
+        main_id:this.id,
+        user:this.frameuser,
+        chat:this.chat,
+        
+      })
+      .then((resp)=>{
+        this.message="" 
+        window.scrollTo(0,document.body.scrollHeight);
+        const theElement = document.getElementById('bottom');
+        const scrollToBottom = (node) => {
+	       node.scrollTop = node.scrollHeight;
+         }
+         scrollToBottom(theElement);
+        
+      })
+    }
+ },
+ async getOldMessage()
+ {
+   await axios.get('/getOldMessage/'+this.id)
+   .then((resp)=>{
+     console.warn(resp.data);
+     if(resp.data != '')
+     this.chat=resp.data;
+   })
+ },
+ async delsession()
+ {
+  var formdata=new FormData();
+  formdata.append('_method',"DELETE");
+  await axios.post('/delsession/'+this.id,formdata);
+ },
+  phpecho()
+ {
+    
+   Echo.channel(`chat.${this.id}`)
+   .listen('ChatEvent',(e)=>{
+     this.chat.user.push(e.user.first_name)
+     this.chat.className.push('orange')
+     this.chat.badge.push('badge-info')
+     this.chat.message.push(e.message)
+     this.chat.icon.push(e.user.useravatar)
+       axios.post(`/saveToSession/${this.id}`,{
+                    chat : this.chat
+                })
+                      .then(response => {
+                          window.scrollTo(0,document.body.scrollHeight);
+        const theElement = document.getElementById('bottom');
+        const scrollToBottom = (node) => {
+	       node.scrollTop = node.scrollHeight;
+         }
+         scrollToBottom(theElement);
+                      })
+                      .catch(error => {
+                        console.log(error);
+                      });
+   })
+    
+ },
+   async getsession()
+   {
+     await axios.get(`/check/${this.id}`)
+     .then((resp)=>{
+       console.warn('session',resp.data);
+     })
+   }
 },
-mounted()
+mounted() 
 {
     this.geteachinfo();
     this.getseasoninfo();
     this.calldata();
+    this.phpecho();
+    this.getOldMessage();
+    this.getsession();
 },
 computed:{
     ...mapGetters(['frameuser'])

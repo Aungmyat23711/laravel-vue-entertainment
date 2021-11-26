@@ -11,7 +11,7 @@ use App\Models\room;
 use App\Models\pchat;
 
 class ChatController extends Controller
-{
+{ 
     //
    public function chatting(Request $req)
    {

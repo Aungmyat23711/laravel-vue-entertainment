@@ -1,6 +1,6 @@
 <template>
-  <div class="frame">
-     <div class="item">
+  <div class="rframe">
+     <div class="ritem">
         <v-container>
               <v-row>
                 <v-col cols="12" md="12" sm="12">
@@ -22,15 +22,26 @@
                       <v-window-item :value="1">
                           <v-card-text>
                             <v-text-field
+                            prepend-icon="email"
                             dark
                             label="Email" 
                             v-model="email" 
                             required
                             :rules="emailRule">
                             </v-text-field>
-                            <span class="text-caption white--text text--darken-1"> 
-                                Please enter email to create account.
-                            </span>
+                             <v-file-input
+                            dark
+                            label="Search and download avatar or skip" 
+                            v-model="file" 
+                            required
+                            @change="filechange"
+                            >
+                            </v-file-input>
+                            <v-layout column align-center>
+                              <v-avatar size="100">
+                              <img src="/anime/user.png" alt="" id="img">
+                            </v-avatar>
+                            </v-layout>
                           </v-card-text>
                       </v-window-item>
                       <v-window-item :value="2">
@@ -124,6 +135,7 @@ export default {
 data()
 {
   return {
+    file:[],
     step:1,
     email:'',
     ison:false,
@@ -167,6 +179,26 @@ computed:{
   }
 },
 methods:{
+  filechange()
+  {
+     var file=this.file;
+     var reader=new FileReader();
+     if(file==null)
+       {
+           img.src="/anime/user.png";
+       }
+       else
+       {
+           reader.onload=(e)=>{
+              var result=reader.result;
+              var img=document.getElementById('img');
+              img.src=result;
+           }
+           reader.readAsDataURL(file)
+       }
+
+   
+  },
   nextstep()
   {
      if(this.$refs.form.validate())
@@ -183,6 +215,7 @@ methods:{
     formdata.append('last_name',this.lname);
     formdata.append('password',this.password);
     formdata.append('email',this.email)
+    formdata.append('useravatar',this.file)
     await axios.post('/aframe/register/adduser',formdata)
     .then((resp)=>{
       this.loading4=false;
@@ -197,7 +230,7 @@ methods:{
 </script>
 
 <style lang="scss" scoped>
-.frame{
+.rframe{
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -208,7 +241,7 @@ methods:{
     background-repeat: no-repeat;
         background-attachment: fixed;
 }
-.item{
+.ritem{
     background: white;
     border: 1px solid white;
     background-image: linear-gradient(black,rgb(107, 177, 243));
@@ -221,7 +254,7 @@ methods:{
 }
 @media only screen and (max-width:600px)
 {
-  .item{
+  .ritem{
     width:100%;
     margin-right: 40px;
   }
