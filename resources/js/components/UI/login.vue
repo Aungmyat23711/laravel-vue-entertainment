@@ -26,9 +26,10 @@
                   :rules="passwordRules"
                   outlined
                   v-model="acceptpassword"
-                  :type="hide ? 'password':'text'"
-                  :append-icon="hide? 'mdi-eye-off':'mdi-eye'"
+                  :type="hide ? 'text':'password'"
+                  :append-icon="hide? 'mdi-eye':'mdi-eye-off'"
                   @click:append="hide=!hide"
+                  @keyup.enter="login"
                 >
                 </v-text-field>
               </v-flex>
@@ -86,9 +87,14 @@ export default {
                 password:this.acceptpassword,
             })
             .then((resp)=>{
-                this.message=resp.data.message;
+                
                 this.$store.dispatch('setadmin',resp.data) 
-                this.$router.push('/')
+                if(resp.data.message)
+                {
+                  this.message=resp.data.message;
+                }else{
+                  this.$router.push('/')
+                }
             })
         }
     },

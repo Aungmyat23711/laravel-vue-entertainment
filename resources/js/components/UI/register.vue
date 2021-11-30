@@ -91,6 +91,7 @@
                                  label="Role"
                                  outlined
                                  :rules="roleRules"
+                                 @keyup.enter="register"
                                  >
 
                                  </v-textarea>
@@ -189,6 +190,7 @@ methods:{
           await axios.post('/animeframe/register/add',formdata)
           .then((resp)=>{
            this.snackbar=true;
+           this.$router.push('/animeframe/login')
            
           })  
           .catch((error)=>{

@@ -72,7 +72,7 @@ class entertainmentController extends Controller
     }
     function login(Request $req)
     {
-        $user=team::where('email',$req->email)->first();
+        $user=team::where(['email'=>$req->email])->first();
         if(!$user || $req->password!=$user->password)
         {
             return response()->json(['message'=>'User Name or Password not match!']);
@@ -258,7 +258,7 @@ class entertainmentController extends Controller
             'password'=>['required'],
             'email'=>['required','email']
         ]);
-      $data=aframeuser::where('email',$req->email)->first();
+      $data=aframeuser::where(['email'=>$req->email])->first();
       if(!$data || $req->password!=$data->password)
       {
           return response()->json(['message'=>'User name or password not match']);

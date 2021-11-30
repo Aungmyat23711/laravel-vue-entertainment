@@ -7,10 +7,12 @@
             <v-card-title class="justify-center">
               <h4>Please Login To Continue</h4>
             </v-card-title>
-            <v-card-text class="justify-center">
+            <v-card-text class="text-center">
+              <v-btn text to="/animeframe/login">Login</v-btn>
               <h5>
-                Don't you have a account? Please <v-btn text>Register</v-btn>
+                Don't you have a account?
               </h5>
+              <v-btn text to="/animeframe/register">Register</v-btn>
             </v-card-text>
           </v-card>
         </v-flex>
