@@ -1,6 +1,7 @@
 const mix = require('laravel-mix');
 var VuetifyLoaderPlugin=require('vuetify-loader/lib/plugin')
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
 var webpackConfig = {
     plugins: [
@@ -24,6 +25,10 @@ mix.webpackConfig(webpackConfig);
  */
 
 mix.js('resources/js/app.js', 'public/js')
+// .postCss('resources/css/app.css','public/css',[
+//     require("tailwindcss"),
+//     autoprefixer
+// ])
     .vue()
     .sass('resources/sass/app.scss', 'public/css')
     .version();

@@ -12,6 +12,7 @@ use App\Models\type;
 use App\Models\aframeuser;
 use App\Models\contact;
 use App\Events\ChatEvent;
+use Illuminate\Validation\Rule;
 class entertainmentController extends Controller
 {
     //
@@ -222,8 +223,11 @@ class entertainmentController extends Controller
                        ->paginate(6);
         return $data;
     }
-    function adduser(Request $req)
+    function adduser(Request $req,aframeuser $user)
     {
+        $req->validate([
+            'email'=>[Rule::unique('aframeusers')->ignore('id',$user->id)],
+        ]);
         if($req->useravatar==null)
         {
         $data=new aframeuser;
@@ -299,8 +303,9 @@ class entertainmentController extends Controller
         $message=$req->message;
         $main_id=$req->main_id;
         $user=$req->user;
+        $time=$req->time;
         $this->saveToSession($req,$main_id);
-        event(new ChatEvent($message,$main_id,$user));
+        event(new ChatEvent($message,$main_id,$user,$time));
       
     }
     function saveToSession(Request $req,$id)

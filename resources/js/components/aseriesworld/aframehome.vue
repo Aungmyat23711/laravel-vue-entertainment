@@ -274,13 +274,15 @@ methods:{
     },
     async getdatabytype(name)
     {
+      this.$Progress.start();
       await axios.get('/aframe/getdatabytype/'+name)
       .then((resp)=>{
         this.search=""
         this.type=name;
         this.issearch=false;
         this.datas=resp.data;
-        this.searchdatanull=false;   
+        this.searchdatanull=false; 
+        this.$Progress.finish();  
         if(resp.data.from==null)
        {
           this.notavaliable=true;

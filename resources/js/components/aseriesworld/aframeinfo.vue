@@ -7,6 +7,7 @@
                <v-col cols="12" md="6">
                      <v-btn  dark text to="/aframe/home" style="text-decoration:none;">Back</v-btn>
                </v-col>
+               
            </v-row>
             <v-row>
                 <v-col cols="12" md="4" class="text-center">
@@ -112,6 +113,7 @@
                         </v-list-item-title> 
                          <v-list-item-title class="mt-2">
                           <small class="badge float-right" :class="chat.badge[index]">{{chat.user[index]}}</small>
+                          <small class="badge float-left" :class="chat.badge[index]">{{chat.time[index]}}</small>
                          </v-list-item-title>   
                       </v-list-item-content>
                     </v-list-item>
@@ -176,12 +178,14 @@ data()
       
       
       message:'',
+      time:'',
       chat:{
         className:[],
         badge:[],
         message:[],
         user:[],
-        icon:[]
+        icon:[],
+        time:[]
       },
       scrollInvoked: 0,
     }
@@ -193,6 +197,7 @@ methods:{
      if(this.eachinfo.length===0){
          this.notready=true;
      }
+     
      await axios.get('/aframe/info/geteachinfo/'+this.id)
      .then((resp)=>{
          this.eachinfo=resp.data;
@@ -201,9 +206,11 @@ methods:{
  },
  async getseasoninfo()
  {
+    
      await axios.get('/aframe/info/getseasoninfo/'+this.id)
      .then((resp)=>{
       this.eachseasons=resp.data;
+      
      })
  },
  async calldata(id)
@@ -228,12 +235,13 @@ methods:{
       this.chat.message.push(this.message)
       this.chat.icon.push(this.frameuser.useravatar)
       this.chat.user.push('you')
+      this.chat.time.push(this.time)
       await axios.post('/aframe/send',{
         message:this.message,
         main_id:this.id,
         user:this.frameuser,
         chat:this.chat,
-        
+        time:this.time,
       })
       .then((resp)=>{
         this.message="" 
@@ -260,7 +268,25 @@ methods:{
  {
   var formdata=new FormData();
   formdata.append('_method',"DELETE");
-  await axios.post('/delsession/'+this.id,formdata);
+  await axios.post('/delsession/'+this.id,formdata)
+  .then((resp)=>{
+     const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-right',
+  iconColor: 'yellow',
+  customClass: {
+    popup: 'colored-toast'
+  },
+  showConfirmButton: false,
+  timer: 2300,
+  timerProgressBar: true
+})
+  Toast.fire({
+  icon: 'info',
+  title: 'Your history is clear!Please refresh to apply',
+   color:'red'
+})
+  })
  },
   phpecho()
  {
@@ -272,6 +298,7 @@ methods:{
      this.chat.badge.push('badge-info')
      this.chat.message.push(e.message)
      this.chat.icon.push(e.user.useravatar)
+     this.chat.time.push(e.time)
        axios.post(`/saveToSession/${this.id}`,{
                     chat : this.chat
                 })
@@ -289,22 +316,29 @@ methods:{
    })
     
  },
-   async getsession()
+  //  async getsession()
+  //  {
+  //    await axios.get(`/check/${this.id}`)
+  //    .then((resp)=>{
+  //      console.warn('session',resp.data);
+  //    })
+  //  },
+   getTime()
    {
-     await axios.get(`/check/${this.id}`)
-     .then((resp)=>{
-       console.warn('session',resp.data);
-     })
+     var data=new Date();
+     this.time=data.getHours()+':'+data.getMinutes()+':'+data.getSeconds();
+     
    }
 },
 mounted() 
 {
+   this.getTime();
     this.geteachinfo();
     this.getseasoninfo();
     this.calldata();
     this.phpecho();
     this.getOldMessage();
-    this.getsession();
+    // this.getsession();
 },
 computed:{
     ...mapGetters(['frameuser'])
@@ -312,7 +346,7 @@ computed:{
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .nal{
   border: 1px solid orange;
   border-radius: 20px;

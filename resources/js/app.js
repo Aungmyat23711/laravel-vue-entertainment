@@ -82,6 +82,8 @@ import Aframelogin from './components/aseriesworld/aframelogin'
 import Aframetype from './components/aseriesworld/aframetype'
 import Aframetypeinfo from './components/aseriesworld/aframetypeinfo'
 import Aframecontact from './components/aseriesworld/aframecontact'
+import Aframeabout from './components/aseriesworld/aframeabout'
+import Aframewatch from './components/UI/aframewatchforadmin'
 import { mapGetters } from 'vuex';
 
 
@@ -221,6 +223,16 @@ const routes=[
     name:'aframecontact',
     path:'/aframe/contact',
     component:Aframecontact
+  },
+  {
+    name:'aframeabout',
+    path:'/aframe/about',
+    component:Aframeabout
+  },
+  {
+    name:'aframewatchforadmin',
+    path:'/aframe/admin/watch/:id',
+    component:Aframewatch 
   }
 
 ]

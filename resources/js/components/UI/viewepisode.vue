@@ -19,17 +19,18 @@
           </v-layout><br><hr>
       </v-container>
       <v-container>
-           <v-layout row wrap >
+          <v-form ref="form">
+              <v-layout row wrap >
               <v-flex xs6 offset-xs3 md3 class="ml-5">
-                 <v-text-field outlined v-model="episode" label="Episode">
+                 <v-text-field outlined v-model="episode" label="Episode" :rules="epRules" required autofocus>
                  </v-text-field>       
               </v-flex>
               <v-flex xs6 offset-xs3 md3 class="ml-5">
-                     <v-text-field outlined v-model="name" label="Ep Name">
+                     <v-text-field outlined v-model="name" label="Ep Name" :rules="nameRules" required >
                  </v-text-field> 
               </v-flex>
               <v-flex xs6 offset-xs3 md3 class="ml-5">
-                     <v-text-field outlined v-model="link" label="Link">
+                     <v-text-field outlined v-model="link" label="Link" :rules="linkRules" required @keyup.enter="addepisode" >
                  </v-text-field> 
               </v-flex>
               
@@ -38,14 +39,15 @@
                         <v-icon>{{isedit ? 'update':'add'}}</v-icon>
                     </v-btn>
                     <v-btn v-if="isedit==true" class="info white--text ml-6 mt-4" @click="clearedit">
-                        <span>Add</span>
+                        <span>Go Add</span>
                         <v-icon>add</v-icon>
                     </v-btn> 
                      <v-btn style="text-decoration:none;" class="red white--text ml-6 mt-4" :to="`/animeframe/myprojects/viewseason/${mid}`">Back</v-btn>
               
           </v-layout>
-          <v-layout row wrap>
-               <v-flex xs4 md2 v-for="ep in episodes" :key="ep.id" class="my-2">
+          </v-form>
+          <v-layout row wrap class="mt-4">
+               <v-flex xs12 md6  v-for="ep in episodes" :key="ep.id" class="mb-2">
                    <v-dialog :v-model="`dialog`+ep.id" width="600px" height="auto">
                        <template v-slot:activator={on}>
                               <v-btn text class="primary--text"  v-on="on">
@@ -56,13 +58,13 @@
                           <v-col cols="12" md="12">
                                   <v-card>
                                     <v-card-text class="text-center">
-                                        <v-btn class="primary">Go</v-btn>
+                                        <v-btn class="primary" :to="`/aframe/admin/watch/${ep.id}`">Go</v-btn>
                                         <v-btn class="info ml-5" @click="showeditep(ep)">Edit</v-btn>
                                         <v-btn class="red white--text ml-5" @click="delep(ep.id)">Delete</v-btn>
-                                    </v-card-text>
+                                    </v-card-text> 
                                  </v-card>
                           </v-col>
-                      </v-row>
+                      </v-row> 
                    </v-dialog>
                </v-flex>
           </v-layout>
@@ -81,11 +83,20 @@ data()
     sid:this.$route.params.sid,
     seasons:[],
     name:'',
-    episode:'',
+    episode:'Ep ',
     link:'',
     episodes:[],
     isedit:false,
-    epid:''
+    epid:'',
+    epRules:[
+        v=>v.length >3 || 'Episode field is required!'
+    ],
+    nameRules:[
+        v=>!!v || 'Name field is required!'
+    ],
+    linkRules:[
+        v=>!!v || 'Link field is required!'
+    ]
     }
 },
 methods:{
@@ -106,7 +117,9 @@ methods:{
     },
     async addepisode()
     {
-        var formdata=new FormData();
+        if(this.$refs.form.validate())
+        {
+            var formdata=new FormData();
         formdata.append('episode',this.episode)
         formdata.append('link',this.link)
         formdata.append('ep_name',this.name)
@@ -114,7 +127,8 @@ methods:{
         formdata.append('season_id',this.sid)
         await axios.post('/animeframe/addepisode',formdata)
         .then((resp)=>{
-            this.episode="";
+            this.$refs.form.reset();
+            this.episode="Ep ";
             this.link="";
             this.name="";
             this.getepisode()
@@ -134,6 +148,7 @@ methods:{
                 title:'Success'
             })
         })
+        }
     },
     async getepisode()
     {
@@ -168,7 +183,8 @@ methods:{
         formdata.append('_method','PUT');
         await axios.post(`/aframe/episode/update/${this.epid}`,formdata)
         .then((resp)=>{
-             this.episode="";
+            this.$refs.form.reset();
+             this.episode="Ep ";
              this.link="";
              this.name="";
              this.getepisode();

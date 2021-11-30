@@ -32,6 +32,13 @@
                    </div>
                </v-app-bar>
               <v-navigation-drawer app v-model="drawer" dark>
+                 <v-layout column align-center class="mt-5" v-if="frameuser">
+                           <v-avatar size="100">
+                           <img :src="`/anime/${frameuser.useravatar}`" alt="">
+                           </v-avatar>
+                       <span class="headline mt-1 white--text">{{frameuser.first_name}} {{frameuser.last_name}}</span>
+                       <span class="subheading white--text">{{frameuser.email}}</span>
+                  </v-layout>
                 <v-list>
                   <v-list-item :class="`link ${link.title}`" v-for="link in links" :key="link.id" :to="link.to">
                     <v-list-item-action>
@@ -59,7 +66,7 @@
               cols="12"
               class="text-center"
               >
-                  This is footer
+                 ammgyi@gmail.com
               </v-col>
             </v-row>
        </v-footer>

@@ -23,9 +23,18 @@
                              </form>
                            </v-card-text>
                            <v-card-actions class="justify-center">
-                               <v-btn class="glassbtn" 
-                               :loading='loading4'
+                               <v-row>
+                                   <v-col cols="12" md="6" sm="6" offset-md="3" offset-sm="3" class="text-center">
+                                      <v-btn class="glassbtn" 
+                               :loading='loading4' 
                                @click="alogin">Login</v-btn>
+                                   </v-col>
+                                    <v-col cols="12" md="6" sm="6" offset-md="3" offset-sm="3" class="text-center">
+                                      <span>If you don't have account,<v-btn text to="/aframe/register">Sign up</v-btn>for free!</span>
+                                   </v-col>
+                               </v-row>
+                               
+                              
                            </v-card-actions>
                        </v-card>
                    </v-col>
@@ -77,6 +86,7 @@ methods:{
         this.emailerror=resp.data.message;
         this.password=null;
         this.email="";
+        this.$router.push('/aframe/home')
         })
         .catch((error)=>{
             this.passworderror=error.response.data.errors.password[0];

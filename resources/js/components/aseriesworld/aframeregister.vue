@@ -105,10 +105,9 @@
                     <v-divider></v-divider>
                     <v-card-actions>
                       <v-btn
-                       :disabled="step===1"
-                       @click="step--"
+                       @click="step===1 ? gologin():step--"
                        text
-                      >Back</v-btn>
+                      >{{step===1 ? 'Login':'Back'}}</v-btn>
                       <v-spacer></v-spacer>
                       <v-btn
                       style="text-decoration:none;"
@@ -146,6 +145,7 @@ data()
     lname:'',
     loader:null,
     loading4:false,
+    emailunique:false,
     passwordRule:[
       v=>!!v || 'Password field is required!',
       v=>v.length >=4 || 'Character must be greater than 4'
@@ -207,9 +207,14 @@ methods:{
      }
     
   },
+  gologin(){
+  this.$router.push('/aframe/login');
+  },
   async register()
   {
-    this.loading4=true;
+   if(this.$refs.form.validate())
+   {
+      this.loading4=true;
     var formdata=new FormData();
     formdata.append('first_name',this.fname);
     formdata.append('last_name',this.lname);
@@ -219,11 +224,29 @@ methods:{
     await axios.post('/aframe/register/adduser',formdata)
     .then((resp)=>{
       this.loading4=false;
-      this.email="",
-      this.password="",
-      this.cpassword=""
-      this.step=this.step+1
+      this.email="";
+      this.password="";
+      this.cpassword="";
+      this.step=this.step+1;
+      this.emailunique=false;
     })
+    .catch((error)=>{
+      if(error.response.data.errors.email)
+      {
+        this.emailunique=true;
+        this.step=this.step-2
+      }
+    })
+   }
+  }
+},
+watch:{
+  emailunique(next,pre)
+  {
+    if(next==true)
+    {
+      this.loading4=false;
+    }   
   }
 }
 }

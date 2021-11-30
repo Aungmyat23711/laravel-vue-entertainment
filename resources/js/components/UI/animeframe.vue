@@ -130,6 +130,19 @@
           <v-main class="back">
               <router-view></router-view>
           </v-main>
+          <v-footer>
+            <v-row justify="center" class="my-3">
+              <v-btn text class="ml-4 ">Dashboard</v-btn>
+              <v-btn text class="ml-4 ">My Project</v-btn>
+              <v-btn text class="ml-4 ">Team</v-btn>
+              <v-col 
+              cols="12"
+              class="text-center"
+              >
+                  <span class="title">ammgyi@gmail.com</span>
+              </v-col>
+            </v-row>
+       </v-footer>
        </v-app>
    </div>
 </template>
@@ -167,7 +180,7 @@ data()
                 {icon:'supervised_user_circle',text:'PrivateRoom',route:'/animeframe/privatechat'},
                 {icon:'contacts',text:'Team',route:'/animeframe/team'},
                 {icon:'chat',text:'Chatting',route:'/animeframe/admin/chatting'}
-            ]
+            ],
     }
 },
 methods:{

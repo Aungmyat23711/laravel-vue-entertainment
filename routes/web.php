@@ -50,6 +50,7 @@ Route::match(['get','post'],'/animeframe/addepisode',[entertainmentController::c
 Route::get('/animeframe/getepisode/{id}',[entertainmentController::class,'getepisode']);
 Route::match(['get','post'],'/animeframe/addtype',[entertainmentController::class,'addtype']);
 Route::get('/animeframe/getType',[entertainmentController::class,'getType']);
+Route::view('/aframe/admin/watch/{id}','laravel+vue/uiux');
 
 //for aseriesworld
 Route::view('/aframe','laravel+vue/aseriesworld');
@@ -80,6 +81,7 @@ Route::get('/check/{id}',function($id){
 Route::get('/getOldMessage/{id}',[entertainmentController::class,'getOldMessage']);
 Route::delete('/delsession/{id}',[entertainmentController::class,'delsession']);
 Route::match(['get','post'],'/saveToSession/{id}',[entertainmentController::class,'saveToSession']);
+Route::view('/aframe/about','laravel+vue/aseriesworld');
 
 //for chat
 Route::view('/animeframe/chatpage','laravel+vue/chat');

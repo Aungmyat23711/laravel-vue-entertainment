@@ -3,6 +3,14 @@
      <div v-if="frameuser">
       
  <v-container fluid class="ma-5" v-for="info in typeinfo" :key="info.id">
+     <v-row>
+               <v-col cols="4" md="8">
+                     <v-btn dark text :to="`/aframe/home/${type}/${id}`">Back</v-btn>
+               </v-col>
+                <v-col cols="8" md="4" class="text-right pr-12">
+               <v-btn dark to="/aframe/home" style="text-decoration:none;">Home</v-btn>
+               </v-col>
+     </v-row>
             <v-row>
                 <v-col cols="12" md="4" class="text-center">
                    <img :src="`/anime/${info.photo}`" alt="" style="width:250px;height:300px;">
@@ -65,13 +73,56 @@
             </v-expansion-panels>
                </v-col>
            </v-row>
-           <v-row>
-               <v-col cols="12" md="6">
-                     <v-btn :to="`/aframe/home/${type}/${id}`">Back</v-btn>
-               </v-col>
-           </v-row>
       </v-container>
-      
+      <v-container class='mt5' fluid>
+        <v-row>
+            <v-col cols="12" md="6" offset-md="3">
+              <h2 class="white--text">Message Box</h2>
+            </v-col>
+        </v-row>
+            <v-row>
+              <v-col cols="12" md="6" offset-md="3">
+                 <v-form>
+                   <v-textarea
+                   solo
+                   v-model="message"
+                   placeholder="write some text"
+                   @keyup.enter="send"
+                   >
+
+                   </v-textarea>
+                   <v-btn small @click="delsession">Delete Session</v-btn>
+                 </v-form>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" md="6" offset-md="3">
+                  <v-list style="border-radius:10px;" 
+                  dark
+                  class="overflow-y-auto"
+                  max-height="400"
+                   id="bottom"
+                  >
+                    <v-list-item v-for="chatting,index in chat.message" :key="chatting.index">
+                      <v-list-item-action>
+                        <v-avatar class="mb-6" size="60">
+                         <img :src="`/anime/${chat.icon[index]}`" alt="" >
+                        </v-avatar>
+                      </v-list-item-action>
+                      <v-list-item-content >
+                        <v-list-item-title class='pa-5' :class="chat.className[index]" style="border-radius:10px;">
+                            <span style="font-size:18px;" class="white--text">{{chatting}}</span>
+                        </v-list-item-title> 
+                         <v-list-item-title class="mt-2">
+                          <small class="badge float-right" :class="chat.badge[index]">{{chat.user[index]}}</small>
+                          <small class="badge float-left" :class="chat.badge[index]">{{chat.time[index]}}</small>
+                         </v-list-item-title>   
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list>
+              </v-col>
+            </v-row>
+      </v-container>
      
        <v-container v-if="this.notready==true" style="margin-top:50px;">
        <v-row>
@@ -125,6 +176,18 @@ data()
         type:this.$route.params.type,
         eachseasons:[],
         idseasons:[],
+         message:'',
+      time:'',
+      chat:{
+        className:[],
+        badge:[],
+        message:[],
+        user:[],
+        icon:[],
+        time:[]
+      },
+      scrollInvoked: 0,
+
     }
 },
 methods:{
@@ -157,12 +220,111 @@ methods:{
  sendtype(type)
  {
      this.$router.push(`/aframe/home/${type}/${this.id}`)
- }
+ },
+ async send()
+ {
+    if(this.message.length!=0)
+    {
+      this.chat.className.push('primary')
+      this.chat.badge.push('badge-primary')
+      this.chat.message.push(this.message)
+      this.chat.icon.push(this.frameuser.useravatar)
+      this.chat.user.push('you')
+      this.chat.time.push(this.time)
+      await axios.post('/aframe/send',{
+        message:this.message,
+        main_id:this.id,
+        user:this.frameuser,
+        chat:this.chat,
+        time:this.time,
+      })
+      .then((resp)=>{
+        this.message="" 
+        window.scrollTo(0,document.body.scrollHeight);
+        const theElement = document.getElementById('bottom');
+        const scrollToBottom = (node) => {
+	       node.scrollTop = node.scrollHeight;
+         }
+         scrollToBottom(theElement);
+        
+      })
+    }
+ },
+ async getOldMessage()
+ {
+   await axios.get('/getOldMessage/'+this.id)
+   .then((resp)=>{
+     console.warn(resp.data);
+     if(resp.data != '')
+     this.chat=resp.data;
+   })
+ },
+ async delsession()
+ {
+  var formdata=new FormData();
+  formdata.append('_method',"DELETE");
+  await axios.post('/delsession/'+this.id,formdata)
+  .then((resp)=>{
+     const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-right',
+  iconColor: 'yellow',
+  customClass: {
+    popup: 'colored-toast'
+  },
+  showConfirmButton: false,
+  timer: 2300,
+  timerProgressBar: true
+})
+  Toast.fire({
+  icon: 'info',
+  title: 'Your history is clear!Please refresh to apply',
+   color:'red'
+})
+  })
+ },
+  phpecho()
+ {
+    
+   Echo.channel(`chat.${this.id}`)
+   .listen('ChatEvent',(e)=>{
+     this.chat.user.push(e.user.first_name)
+     this.chat.className.push('orange')
+     this.chat.badge.push('badge-info')
+     this.chat.message.push(e.message)
+     this.chat.icon.push(e.user.useravatar)
+     this.chat.time.push(e.time)
+       axios.post(`/saveToSession/${this.id}`,{
+                    chat : this.chat
+                })
+                      .then(response => {
+                          window.scrollTo(0,document.body.scrollHeight);
+        const theElement = document.getElementById('bottom');
+        const scrollToBottom = (node) => {
+	       node.scrollTop = node.scrollHeight;
+         }
+         scrollToBottom(theElement);
+                      })
+                      .catch(error => {
+                        console.log(error);
+                      });
+   })
+    
+ },
+ getTime()
+   {
+     var data=new Date();
+     this.time=data.getHours()+':'+data.getMinutes()+':'+data.getSeconds();
+     
+   }
 },
 mounted()
 {
+    this.getTime();
     this.getinfotype();
     this.getseasoninfo();
+    this.phpecho();
+    this.getOldMessage();
 },
 computed:{
     ...mapGetters(['frameuser'])
