@@ -20,7 +20,6 @@ class CreateTeamsTable extends Migration
             $table->string('password', 50);
             $table->string('avatar', 100);
             $table->string('role', 100);
-            $table->integer('room_id');
         });
     }
 
