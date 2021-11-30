@@ -7,7 +7,7 @@
     <meta id="token" name="csrf-token" content="{{ csrf_token() }}">
     <title>Admin Series World</title>
     <link rel="icon" href="/anime/black.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="{!! asset('css/app.css') !!}">
+    <link rel="stylesheet" href="{{mix('css/app.css')}}">
 
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" 
     integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -21,7 +21,7 @@
     <div id="entertainment">
         <animeframe-component></animeframe-component>
     </div>
-   <script src="{!! asset('js/app.js') !!}">
+   <script src="{{mix('js/app.js')}}">
 
    </script>
    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js">
