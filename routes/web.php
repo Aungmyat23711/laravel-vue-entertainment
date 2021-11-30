@@ -30,7 +30,7 @@ Route::view('/animeframe','laravel+vue/uiux');
 Route::view('/','laravel+vue/uiux');
 Route::view('/animeframe/myprojects','laravel+vue/uiux');
 Route::view('/animeframe/team','laravel+vue/uiux');
-Route::match(['get','post'],'/createdata',[entertainmentController::class,'createdata']);
+Route::match(['get','post'],'/animeframe/createdata',[entertainmentController::class,'createdata']);
 Route::get('/getdata',[entertainmentController::class,'getdata']);
 Route::delete('/deleteitem/{id}',[entertainmentController::class,'deleteitem']);
 Route::view('/animeframe/register','laravel+vue/uiux');

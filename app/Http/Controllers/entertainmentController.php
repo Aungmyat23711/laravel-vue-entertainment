@@ -226,7 +226,7 @@ class entertainmentController extends Controller
     function adduser(Request $req,aframeuser $user)
     {
         $req->validate([
-            'email'=>[Rule::unique('aframeusers')->ignore('id',$user->id)],
+            'email'=>[Rule::unique('aframeusers')],
         ]);
         if($req->useravatar==null)
         {
