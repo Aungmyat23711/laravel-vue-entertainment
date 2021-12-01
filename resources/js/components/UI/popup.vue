@@ -260,7 +260,7 @@ methods:{
           formdata.append('type3',this.type3)
           formdata.append('type4',this.type4)
           formdata.append('type5',this.type5)
-              await axios.post('animeframe/createdata',formdata)
+              await axios.post('/animeframe/createdata',formdata)
           .then((resp)=>{
               this.due="",
               this.type1="",

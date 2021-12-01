@@ -93,6 +93,7 @@ export default {
                 {
                   this.message=resp.data.message;
                 }else{
+                  this.$store.dispatch('setadmin',resp.data)
                   this.$router.push('/')
                 }
             })

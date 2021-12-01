@@ -66,7 +66,6 @@ methods:{
         formdata.append('password',this.password);
         await axios.post('/aframe/login/matchuser',formdata)
         .then((resp)=>{
-            this.$store.dispatch('setuser',resp.data)
             const Toast = Swal.mixin({
   toast: true,
   position: 'top-right',
@@ -83,10 +82,18 @@ methods:{
   title: 'Success'
 })
         this.loading4=false;
-        this.emailerror=resp.data.message;
         this.password=null;
         this.email="";
-        this.$router.push('/aframe/home')
+        if(resp.data.message)
+        {
+            this.emailerror=resp.data.message;
+            this.loading4=false;
+        }else
+        {
+            this.$store.dispatch('setuser',resp.data)
+            this.$router.push('/aframe/home')
+        }
+        
         })
         .catch((error)=>{
             this.passworderror=error.response.data.errors.password[0];
