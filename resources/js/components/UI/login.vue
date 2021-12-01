@@ -88,7 +88,7 @@ export default {
             })
             .then((resp)=>{
                 
-                this.$store.dispatch('setadmin',resp.data) 
+                
                 if(resp.data.message)
                 {
                   this.message=resp.data.message;

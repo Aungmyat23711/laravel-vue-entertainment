@@ -177,9 +177,6 @@ data()
             lists:[
                 {icon:'dashboard',text:'Dashboard',route:'/'},
                 {icon:'movie',text:'Myprojects',route:'/animeframe/myprojects'},
-                {icon:'supervised_user_circle',text:'PrivateRoom',route:'/animeframe/privatechat'},
-                {icon:'contacts',text:'Team',route:'/animeframe/team'},
-                {icon:'chat',text:'Chatting',route:'/animeframe/admin/chatting'}
             ],
     }
 },

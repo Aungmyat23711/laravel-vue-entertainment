@@ -241,8 +241,9 @@ methods:{
          reader.readAsDataURL(input)
          } 
       },
-      async createdata()
+      async createdata(e)
       {
+          e.preventDefault();
           this.loading=true;
          if(this.$refs.form.validate())
          {
@@ -262,7 +263,7 @@ methods:{
           formdata.append('type5',this.type5)
               await axios.post('/animeframe/createdata',formdata)
           .then((resp)=>{
-              this.loading=false;
+               this.loading=false;
               this.dialog=false;
               this.inputerror="";
                   const Toast = Swal.mixin({
@@ -287,7 +288,7 @@ methods:{
               this.type3="",
               this.type4="",
               this.type5="",
-                      eventBus.$emit('pushdata');
+                 eventBus.$emit('pushdata');
                  this.$refs.form.reset();
                  })
                 

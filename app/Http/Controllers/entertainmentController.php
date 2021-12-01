@@ -40,7 +40,7 @@ class entertainmentController extends Controller
        $data->type5=$req->type5;
        $data->admin_id=$req->admin_id;
        $data->save();
-       return response()->json(['message','You have added data']);
+       dd($data);
 
     }
     function getdata()
