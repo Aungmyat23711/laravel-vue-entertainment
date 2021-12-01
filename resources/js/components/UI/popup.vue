@@ -262,16 +262,8 @@ methods:{
           formdata.append('type5',this.type5)
               await axios.post('/animeframe/createdata',formdata)
           .then((resp)=>{
-              this.due="",
-              this.type1="",
-              this.type2="",
-              this.type3="",
-              this.type4="",
-              this.type5="",
               this.loading=false;
-              eventBus.$emit('pushdata');
               this.dialog=false;
-              this.$refs.form.reset();
               this.inputerror="";
                   const Toast = Swal.mixin({
                   toast: true,
@@ -288,6 +280,17 @@ methods:{
                  icon: 'success',
                  title: 'Success'
                  })
+                 .then((resp)=>{
+                      this.due="",
+              this.type1="",
+              this.type2="",
+              this.type3="",
+              this.type4="",
+              this.type5="",
+                      eventBus.$emit('pushdata');
+                 this.$refs.form.reset();
+                 })
+                
           })
           .catch((error)=>{
               this.loading=false;
