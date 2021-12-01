@@ -358,12 +358,7 @@ export default {
       this.getdata();
     });
     this.getType();
-    eventBus.$on('clicktype',()=>{
-      [
-        this.getdata(),
-        this.getType()
-      ]
-    })
+
   },
 };
 </script>

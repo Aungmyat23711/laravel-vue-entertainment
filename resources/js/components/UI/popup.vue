@@ -323,6 +323,9 @@ computed:{
 mounted()
 {
     this.getType();
+    eventBus.$on('clicktype',()=>{
+        this.getType();
+    })
 }
 }
 </script>
