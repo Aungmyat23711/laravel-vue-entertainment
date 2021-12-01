@@ -84,7 +84,7 @@
                          v-model="dialog2"
                          >
                            <template v-slot:activator={on}>
-                               <v-list-item class='addtype' to="#" v-on="on">
+                               <v-list-item class='addtype' v-on="on">
                                   <v-list-item-action>
                                        <v-icon class="white--text">add</v-icon>
                                   </v-list-item-action>

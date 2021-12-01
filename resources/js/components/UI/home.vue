@@ -357,6 +357,10 @@ export default {
     eventBus.$on("pushdata", () => {
       this.getdata();
     });
+    eventBus.$on("clicktype",()=>{
+      this.getType();
+      this.getdata();
+    })
     this.getType();
 
   },
