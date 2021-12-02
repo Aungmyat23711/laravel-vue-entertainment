@@ -63,7 +63,7 @@
                               </v-list-item-content>
                               <v-list-item-content>
                                   <v-list-item-title  class=" white--text">
-                                     <span class="blue--text" to="#" style="cursor:pointer;">{{ss.link}}</span>
+                                      <span class="purple--text" :class="{'grey--text' : ss.link==='Not Ready'}" to="#" style="cursor:pointer;">{{ss.link}}</span>
                                   </v-list-item-title>
                               </v-list-item-content>
                           </v-list-item>
@@ -320,9 +320,10 @@ methods:{
 },
 mounted()
 {
+  this.getseasoninfo();
     this.getTime();
     this.getinfotype();
-    this.getseasoninfo();
+    
     this.phpecho();
     this.getOldMessage();
 },

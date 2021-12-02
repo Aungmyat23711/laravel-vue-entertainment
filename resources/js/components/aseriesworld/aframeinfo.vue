@@ -31,7 +31,7 @@
             </v-row>
             <v-divider></v-divider>
             <v-row>
-                <v-col md="12">
+                <v-col md="10" cols="10">
                     <div class="headline font-effect-outline orange--text">Plot</div>
                      <div class="title font-effect-outline white--text">
                          {{info.story}}
