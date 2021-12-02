@@ -1,5 +1,23 @@
 <template>
   <div>
+     <v-container class="my-5" v-if="!adminInfo">
+      <v-layout row>
+        <v-flex xs12 md6 offset-md3>
+          <v-card>
+            <v-card-title class="justify-center">
+              <h4>Please Login To Continue</h4>
+            </v-card-title>
+            <v-card-text class="text-center">
+              <v-btn text to="/animeframe/login">Login</v-btn>
+              <h5>
+                Don't you have a account?
+              </h5>
+              <v-btn text to="/animeframe/register">Register</v-btn>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
     <v-container my-5>
       <v-layout row>
         <v-flex md12>
@@ -80,7 +98,11 @@ export default {
   },
   mounted()
   {
-  this.getProject();
+    if(this.adminInfo)
+    {
+      this.getProject();
+    }
+  
   
   }
 };

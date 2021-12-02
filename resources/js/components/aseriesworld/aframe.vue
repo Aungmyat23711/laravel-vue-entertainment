@@ -4,26 +4,34 @@
        <header>
              <nav>
                <v-app-bar dark app flat>
-                   <v-app-bar-nav-icon dark @click="drawer=!drawer"></v-app-bar-nav-icon>
+                  <v-icon size="30" app flat @click="drawer=!drawer" class="mr-5">menu</v-icon>
                    <v-toolbar-title>
-                      <span class="font-effect-outline text-uppercase size25">
+                     <div class="pr-8">
+                       <span class="font-effect-outline text-uppercase size25">
                             A_Series
                        </span>
                        <span class="font-effect-fire-animation orange--text font-weight-bold size25">
                              World
                        </span>
+                     </div>
                    </v-toolbar-title>
                    <v-spacer></v-spacer>
-                  <div v-if="!frameuser">
-                     <v-btn text class="white--text" to="/aframe/register" style="text-decoration:none;">
+                  <v-row v-if="!frameuser">
+                    <v-col md="9" sm="9" cols="6" class="text-right">
+                      
+                     <v-btn text class="white--text small" to="/aframe/register" style="text-decoration:none;">
                      <span>Register</span>
                      <v-icon>how_to_reg</v-icon>
                    </v-btn>
-                   <v-btn text class="white--text" to="/aframe/login" style="text-decoration:none;">
+                    </v-col>
+                    <v-col md="3" sm="3" cols="6" class="text-left pr-2">
+                   <v-btn text class="white--text small mr-8 pr-4" to="/aframe/login" style="text-decoration:none;">
                       <span>Login</span>
                       <v-icon>login</v-icon>
                    </v-btn>
-                  </div>
+                  </v-col>
+                   
+                  </v-row>
                    <div v-if="frameuser">
                      <v-btn text class="white--text" @click="logout">
                       <span>Logout</span>
@@ -58,10 +66,9 @@
        </v-main>
        <v-footer style="background:black;">
             <v-row justify="center" class="black my-3 white--text">
-              <v-btn text class="ml-4 white--text">Home</v-btn>
-              <v-btn text class="ml-4 white--text">Contact us</v-btn>
-              <v-btn text class="ml-4 white--text">About us</v-btn>
-              <v-btn text class="ml-4 white--text">Team</v-btn>
+              <v-btn text class="ml-4 white--text" to="/aframe/home">Home</v-btn>
+              <v-btn text class="ml-4 white--text" to="/aframe/contact">Contact us</v-btn>
+              <v-btn text class="ml-4 white--text" to="/aframe/about">About us</v-btn>
               <v-col 
               cols="12"
               class="text-center"
@@ -135,11 +142,12 @@ methods:{
   border-radius: 10px;
 }
 .size25{
-  font-size:25px;
+  font-size:21px;
 }
 @media only screen and (max-width:600px){
   .size25{
-    font-size: 20px;
+    font-size: 15px;
   }
+  
 }
 </style>

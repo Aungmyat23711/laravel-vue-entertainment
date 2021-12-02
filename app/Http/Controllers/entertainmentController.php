@@ -151,13 +151,26 @@ class entertainmentController extends Controller
     }
     function addepisode(Request $req)
     {
-        $data=new episode;
+        if($req->link==null)
+        {
+            $data=new episode;
+            $data->episode=$req->episode;
+            $data->link="Not Ready";
+            $data->ep_name=$req->ep_name;
+            $data->anime_id=$req->anime_id;
+            $data->season_id=$req->season_id;
+            $data->save();
+        }else
+        {
+            $data=new episode;
         $data->episode=$req->episode;
         $data->link=$req->link;
         $data->ep_name=$req->ep_name;
         $data->anime_id=$req->anime_id;
         $data->season_id=$req->season_id;
-        $data->save();
+        $data->save(); 
+        }
+       
         
     }
     function getepisode($id)
@@ -290,13 +303,26 @@ class entertainmentController extends Controller
     }
     function epupdate($id,Request $req)
     {
-        $data=episode::find($id);
+        if($req->link==null)
+        {
+            $data=episode::find($id);
+        $data->episode=$req->episode;
+        $data->link="Not Ready";
+        $data->ep_name=$req->ep_name;
+        $data->anime_id=$req->anime_id;
+        $data->season_id=$req->season_id;
+        $data->save();
+        }else
+        {
+           $data=episode::find($id);
         $data->episode=$req->episode;
         $data->link=$req->link;
         $data->ep_name=$req->ep_name;
         $data->anime_id=$req->anime_id;
         $data->season_id=$req->season_id;
-        $data->save();
+        $data->save(); 
+        }
+        
     }
     function chatting(Request $req)
     {

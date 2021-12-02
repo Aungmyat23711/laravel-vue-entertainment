@@ -240,7 +240,9 @@ methods:{
       .then((resp)=>{
        this.searchdata=resp.data
        this.type=this.search;
-       if(resp.data.data.length===0)
+       if(resp.data)
+       {
+          if(resp.data.data.length===0)
        {
          this.searchdatanull=true
        }
@@ -249,12 +251,15 @@ methods:{
        }
        if(this.search==null || this.search=="")
        {
-         this.type="please write something to search";
+         this.type="write something";
          this.searchisnull=true;
        }
        this.searchisnull=false;
        this.objnull=false;
        this.$Progress.finish();
+       }
+
+      
       })
     },
     active(tab)
@@ -345,5 +350,10 @@ ul.pagination{
   width: 40%;
   height: auto;
   border-radius: 10px;
+}
+@media only screen and (max-width:600px){
+  .item{
+    width: 90%;
+  }
 }
 </style>

@@ -47,7 +47,7 @@
                                                  <v-text-field 
                                                  :value="formattedDate" 
                                                  label="Due date" 
-                                                 prepend-icon="mdi-pencil" 
+                                                 prepend-icon="date_range" 
                                                  v-on="on"
                                                  required
                                                  :rules="dateRules"

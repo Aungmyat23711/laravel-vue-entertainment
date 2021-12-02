@@ -3,8 +3,7 @@
        <v-app id="inspire">
           <nav>
                   <v-app-bar flat app class="rgb(223, 220, 220);">
-                      <v-app-bar-nav-icon text class='grey black--text' @click="drawer=!drawer">  
-                  </v-app-bar-nav-icon>
+                  <v-icon size="30" app flat @click="drawer=!drawer" class="mr-5">menu</v-icon>
                   <v-toolbar-title>
                        <span class="text-uppercase grey--text">
                             Admin
@@ -17,7 +16,7 @@
                   <v-menu offset-y>
                      <template v-slot:activator={on}>
                           <v-btn text v-on="on">
-                            <v-icon>menu</v-icon>
+                            <v-icon>view_list</v-icon>
                             <span>Menu</span>
                           </v-btn>
                      </template>
@@ -33,15 +32,15 @@
                           </v-list>
                      
                   </v-menu>
-                  <v-btn v-if="!adminInfo" text class="ml-3" to="/animeframe/register">
+                  <v-btn v-if="!adminInfo" text class="ml-3" to="/animeframe/register" style="text-decoration:none;">
                    <span>Register</span>
                    <v-icon right >how_to_reg</v-icon>
                   </v-btn>
-                  <v-btn v-if="!adminInfo" text class="ml-3" to="/animeframe/login">
+                  <v-btn v-if="!adminInfo" text class="ml-3" to="/animeframe/login" style="text-decoration:none;">
                       <span>Login</span>
                       <v-icon right>account_circle</v-icon>
                   </v-btn>
-                  <v-btn v-if="adminInfo" text class="ml-3" @click="logout">
+                  <v-btn v-if="adminInfo" text class="ml-3" @click="logout" style="text-decoration:none;">
                         <span>Logout</span>
                         <v-icon right>logout</v-icon>
                   </v-btn>

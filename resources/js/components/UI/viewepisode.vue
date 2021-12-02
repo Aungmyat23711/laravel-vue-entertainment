@@ -30,7 +30,7 @@
                  </v-text-field> 
               </v-flex>
               <v-flex xs6 offset-xs3 md3 class="ml-5">
-                     <v-text-field outlined v-model="link" label="Link" :rules="linkRules" required @keyup.enter="addepisode" >
+                     <v-text-field outlined v-model="link" label="Link"  @keyup.enter="addepisode" >
                  </v-text-field> 
               </v-flex>
               
@@ -94,9 +94,6 @@ data()
     nameRules:[
         v=>!!v || 'Name field is required!'
     ],
-    linkRules:[
-        v=>!!v || 'Link field is required!'
-    ]
     }
 },
 methods:{

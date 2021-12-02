@@ -42,7 +42,7 @@
       </v-container>
       <v-container fluid class="ma-5">
            <v-row>
-               <v-col cols="10" md="6">
+               <v-col cols="12" md="6" class="pr-10">
                       <v-expansion-panels>
                 <v-expansion-panel v-for="season in eachseasons" :key="season.id" class="orange darken">
                     <v-expansion-panel-header @click="calldata(season.id)" class="white--text">
@@ -61,7 +61,7 @@
                               </v-list-item-content>
                               <v-list-item-content>
                                   <v-list-item-title  class=" white--text">
-                                     <span class="blue--text" to="#" style="cursor:pointer;">{{ss.link}}</span>
+                                     <span class="purple--text" :class="{'grey--text' : ss.link==='Not Ready'}" to="#" style="cursor:pointer;">{{ss.link}}</span>
                                   </v-list-item-title>
                               </v-list-item-content>
                           </v-list-item>
@@ -332,9 +332,9 @@ methods:{
 },
 mounted() 
 {
+  this.getseasoninfo();
+  this.geteachinfo();
    this.getTime();
-    this.geteachinfo();
-    this.getseasoninfo();
     this.calldata();
     this.phpecho();
     this.getOldMessage();
