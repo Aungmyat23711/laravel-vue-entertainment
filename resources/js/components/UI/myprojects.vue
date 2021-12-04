@@ -1,6 +1,23 @@
 <template>
   <div>
-     <v-container class="my-5" v-if="!adminInfo">
+    <div v-if="this.wait==true">
+        <v-container class="my-5" v-if="adminInfo">
+      <v-layout row>
+        <v-flex xs12 md6 offset-md3>
+          <v-card>
+            <v-card-title class="justify-center">
+              <h4>Loading</h4>
+            </v-card-title>
+            <v-card-text class="text-center">
+              <h4>Please Wait</h4>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+    </div>
+    <div v-if="this.wait==false">
+       <v-container class="my-5" v-if="!adminInfo">
       <v-layout row>
         <v-flex xs12 md6 offset-md3>
           <v-card>
@@ -18,7 +35,7 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <v-container my-5>
+    <v-container my-5 v-if="adminInfo">
       <v-layout row>
         <v-flex md12>
           <v-expansion-panels>
@@ -63,6 +80,7 @@
         </v-flex>
       </v-layout>
     </v-container>
+    </div>
   </div>
 </template>
 
@@ -76,16 +94,18 @@ export default {
       projects:[],
       dialog:false,
       season:'',
-      seasons:[]
+      seasons:[],
+      wait:false,
     };
   },
   methods:{
     async getProject()
     { 
-
+      this.wait=true;
      await axios.get(`/animeframe/getproject/${this.adminInfo.id}`)
      .then((resp)=>{
-       this.projects=resp.data;
+         this.wait=false;
+         this.projects=resp.data;
      })
     },
    

@@ -234,6 +234,7 @@ methods:{
       if(error.response.data.errors.email)
       {
         this.emailunique=true;
+        this.loading4=false;
         this.step=this.step-2
       }
     })

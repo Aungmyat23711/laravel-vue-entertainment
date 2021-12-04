@@ -4,7 +4,7 @@
         <v-row>
             <v-col cols="12" md="6" offset-md="3" class="text-center">
                 <h1 class="text-white">About us</h1>
-                <v-btn>Learn More</v-btn>
+                <v-btn to="/aframe/portfolio" style="text-decoration:none;">Learn More</v-btn>
             </v-col>
         </v-row>
     </div>

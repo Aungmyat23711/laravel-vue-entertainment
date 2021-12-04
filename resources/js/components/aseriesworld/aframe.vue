@@ -40,10 +40,32 @@
                    </div>
                </v-app-bar>
               <v-navigation-drawer app v-model="drawer" dark>
-                 <v-layout column align-center class="mt-5" v-if="frameuser">
-                           <v-avatar size="100">
-                           <img :src="`/anime/${frameuser.useravatar}`" alt="">
-                           </v-avatar>
+                 <v-layout column align-center class="mt-5" v-if="frameuser"> 
+                   <v-avatar size="100" v-on="on">
+                                   <img :src="`/anime/${frameuser.useravatar}`" alt="">
+                                    </v-avatar>
+                           <v-dialog v-model="dialog">
+                               <template v-slot:activator={on}>
+                                  <v-btn v-on="on" text>
+                                       <v-icon >edit</v-icon>
+                                       <span>Edit</span>
+                                   </v-btn>
+                               </template>
+                               <v-container>
+                                 <v-row >
+                                   <v-col style="background:white;" cols="12" md="6" offset-md="3">
+                                          <v-file-input @change="image" v-model="input">
+                                          </v-file-input>
+                                          <div class="text-center">
+                                             <v-avatar size="100">
+                                               <img :src="`/anime/${input}`" alt="" id="img">
+                                             </v-avatar><br><br>
+                                             <v-btn @click="updateicon">Update</v-btn>
+                                          </div>
+                                   </v-col>
+                                 </v-row>
+                               </v-container>
+                           </v-dialog>
                        <span class="headline mt-1 white--text">{{frameuser.first_name}} {{frameuser.last_name}}</span>
                        <span class="subheading white--text">{{frameuser.email}}</span>
                   </v-layout>
@@ -88,6 +110,8 @@ data()
 {
   return {
     drawer:false,
+    dialog:false,
+    input:'',
     links:[
       {icon:'home',title:'Home',to:'/aframe/home'},
       {icon:'chat',title:'Contact',to:'/aframe/contact'},
@@ -102,7 +126,51 @@ methods:{
   logout()
   {
     this.$store.dispatch('setuser',null);
+  },
+  async geticon()
+  {
+    await axios.get('/aframe/getediticon/'+this.frameuser.id)
+    .then((resp)=>{
+      this.input=resp.data.useravatar;
+    })
+  },
+  image()
+  {
+    var file=this.input;
+     var reader=new FileReader();
+     if(file==null)
+       {
+           img.src="/anime/user.png";
+       }
+       else
+       {
+           reader.onload=(e)=>{
+              var result=reader.result;
+              var img=document.getElementById('img');
+              img.src=result;
+           }
+           reader.readAsDataURL(file)
+       }
+
+  },
+  async updateicon()
+  {
+    var formdata=new FormData();
+    formdata.append('useravatar',this.input);
+    formdata.append('_method','PUT');
+    await axios.post(`/aframe/updateicon/${this.frameuser.id}`,formdata)
+    .then((resp)=>{
+      this.$store.dispatch('setuser',resp.data)
+    })
   }
+},
+mounted()
+{
+  if(this.frameuser)
+  {
+    this.geticon();
+  }
+  
 }
 }
 </script>

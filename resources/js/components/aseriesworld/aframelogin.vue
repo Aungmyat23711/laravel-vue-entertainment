@@ -66,7 +66,9 @@ methods:{
         formdata.append('password',this.password);
         await axios.post('/aframe/login/matchuser',formdata)
         .then((resp)=>{
-            const Toast = Swal.mixin({
+           if(this.emailerror!="")
+           {
+                const Toast = Swal.mixin({
   toast: true,
   position: 'top-right',
   iconColor: 'white',
@@ -81,6 +83,7 @@ methods:{
   icon: 'success',
   title: 'Success'
 })
+           }
         this.loading4=false;
         this.password=null;
         this.email="";

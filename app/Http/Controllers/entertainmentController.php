@@ -53,10 +53,11 @@ class entertainmentController extends Controller
          DB::delete('delete from animedatas where id=?',[$id]);
          return response()->json(['message',"You have deleted data!"]);
     }
-    function teamregister(Request $req)
+    function teamregister(Request $req,team $team)
     {
         $req->validate([
-            'memberavatar'=>['required']
+            'memberavatar'=>['required'],
+            'memberemail'=>[Rule::unique('teams')],
         ]);
         $file=$req->memberavatar;
         $ext=$file->getClientOriginalExtension();
@@ -66,7 +67,7 @@ class entertainmentController extends Controller
         $data->name=$req->membername;
         $data->avatar=$avatar;
         $data->password=$req->memberpassword;
-        $data->email=$req->memberemail;
+        $data->memberemail=$req->memberemail;
         $data->role=$req->memberRole;
         $data->save();
     }
@@ -345,5 +346,37 @@ class entertainmentController extends Controller
     function delsession($id)
     {
         return session()->forget("chat$id");
+    }
+    function getediticon($id)
+    {
+        $data=aframeuser::find($id);
+        return $data;
+    }
+    function updateicon($id,Request $req)
+    {
+        $data=aframeuser::find($id);
+        $file=$req->useravatar;
+        $ext=$file->getClientOriginalExtension();
+        $photo=time().'.'.$ext;
+        $path=$file->move('anime/',$photo);
+        $data->useravatar=$photo;
+        $data->save();
+        return $data;
+    }
+    function getadminicon($id)
+    {
+        $data=team::find($id);
+        return $data;
+    }
+    function updateadminicon($id,Request $req)
+    {
+        $data=team::find($id);
+        $file=$req->avatar;
+        $ext=$file->getClientOriginalExtension();
+        $photo=time().'.'.$ext;
+        $path=$file->move('anime/',$photo);
+        $data->avatar=$photo;
+        $data->save();
+        return $data;
     }
 }

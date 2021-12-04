@@ -48,11 +48,34 @@
              
               <v-navigation-drawer app v-model="drawer" class="cyan">
                   <v-layout column align-center class="mt-5" v-if="adminInfo">
-                           <v-avatar size="100">
+                       <v-avatar size="100"> 
                            <img :src="`/anime/${adminInfo.avatar}`" alt="">
                            </v-avatar>
+                       <v-dialog v-model="dialog5">
+                               <template v-slot:activator={on}>
+                                   <v-btn v-on="on" text>
+                                       <v-icon >edit</v-icon>
+                                       <span>Edit</span>
+                                   </v-btn>
+                                   
                        <span class="headline mt-1">{{adminInfo.name}}</span>
                        <span class="subheading">{{adminInfo.role}}</span>
+                               </template>
+                               <v-container>
+                                 <v-row >
+                                   <v-col style="background:white;" cols="12" md="6" offset-md="3">
+                                          <v-file-input @change="image" v-model="input">
+                                          </v-file-input>
+                                          <div class="text-center">
+                                             <v-avatar size="100">
+                                               <img :src="`/anime/${input}`" alt="" id="img">
+                                             </v-avatar><br><br>
+                                             <v-btn @click="updateicon">Update</v-btn>
+                                          </div>
+                                   </v-col>
+                                 </v-row>
+                               </v-container>
+                           </v-dialog>
                        <Popup/> 
                       
                   </v-layout>
@@ -162,6 +185,8 @@ data()
      typeRules:[
          v=>!!v || 'Type is required'
      ],
+     input:'',
+     dialog5:false,
     showclose:false,
     dialog2:false,
     type:'',
@@ -184,6 +209,42 @@ logout()
 {
     this.$store.dispatch('setadmin',null)
 },
+ image()
+  {
+    var file=this.input;
+     var reader=new FileReader();
+     if(file==null)
+       {
+           img.src="/anime/user.png";
+       }
+       else
+       {
+           reader.onload=(e)=>{
+              var result=reader.result;
+              var img=document.getElementById('img');
+              img.src=result;
+           }
+           reader.readAsDataURL(file)
+       }
+
+  },
+  async geticon()
+  {
+    await axios.get('/aframe/admin/getediticon/'+this.adminInfo.id)
+    .then((resp)=>{
+      this.input=resp.data.avatar;
+    })
+  },
+  async updateicon()
+  {
+    var formdata=new FormData();
+    formdata.append('avatar',this.input);
+    formdata.append('_method','PUT');
+    await axios.post(`/aframe/admin/updateicon/${this.adminInfo.id}`,formdata)
+    .then((resp)=>{
+      this.$store.dispatch('setadmin',resp.data)
+    })
+  },
 async addtype()
 {
    if(this.$refs.form.validate())
@@ -214,6 +275,14 @@ async addtype()
 },
 computed:{
     ...mapGetters(['adminInfo'])
+},
+mounted()
+{
+    if(this.adminInfo)
+    {
+        this.geticon();
+    }
+    
 }
 }
 </script>

@@ -39,7 +39,7 @@
                                   >
 
                                   </v-file-input>
-                                  <span class="red--text">{{inputerror}}</span>
+                                  <span class="red--text">{{inputerror ? inputerror[0]:inputerror}}</span>
                                   <v-responsive class="text-center">
                                             <img src="#" alt="" id="img" style="max-height:150px;max-width:250px;">
                                   </v-responsive>
@@ -83,7 +83,9 @@
                                   class="mt-6"
                                   >
                                   </v-text-field>
+                                         
                               </v-flex>
+
                               <v-flex xs8 md4 offset-md4 offset-xs2>
                                  <v-textarea
                                  v-model="memberRole"
@@ -154,6 +156,7 @@ data()
         memberRole:'',
         inputerror:'',
         snackbar:false,
+        emailerror:'',
 
         nameRules:[
            v=>!!v || 'Name is required',
@@ -194,7 +197,12 @@ methods:{
            
           })  
           .catch((error)=>{
-           this.inputerror=error.response.data.errors.memberavatar[0];
+           this.inputerror=error.response.data.errors.memberavatar;
+           this.emailerror=error.response.data.errors.memberemail;
+           if(this.emailerror)
+           {
+               alert(this.emailerror[0])
+           }
           })
         }
     },

@@ -190,7 +190,7 @@ export default {
   methods: {
     async getdata(page) {
       await axios.get(`/getdata?page=${page}`).then((resp) => {
-        console.warn("getdata");
+
         this.page = resp.data.current_page;
         this.itemsPerPage = resp.data.per_page;
         this.length = resp.data.last_page;

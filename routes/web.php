@@ -82,6 +82,11 @@ Route::get('/getOldMessage/{id}',[entertainmentController::class,'getOldMessage'
 Route::delete('/delsession/{id}',[entertainmentController::class,'delsession']);
 Route::match(['get','post'],'/saveToSession/{id}',[entertainmentController::class,'saveToSession']);
 Route::view('/aframe/about','laravel+vue/aseriesworld');
+Route::view('/aframe/portfolio','laravel+vue/aseriesworld');
+Route::get('/aframe/getediticon/{id}',[entertainmentController::class,'getediticon']);
+Route::put('/aframe/updateicon/{id}',[entertainmentController::class,'updateicon']);
+Route::get('/aframe/admin/getediticon/{id}',[entertainmentController::class,'getadminicon']);
+Route::put('/aframe/admin/updateicon/{id}',[entertainmentController::class,'updateadminicon']);
 
 //for chat
 Route::view('/animeframe/chatpage','laravel+vue/chat');
