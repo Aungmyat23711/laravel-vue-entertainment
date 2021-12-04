@@ -73,7 +73,7 @@ class entertainmentController extends Controller
     }
     function login(Request $req)
     {
-        $user=team::where(['email'=>$req->email])->first();
+        $user=team::where(['memberemail'=>$req->email])->first();
         if(!$user || $req->password!=$user->password)
         {
             return response()->json(['message'=>'User Name or Password not match!']);
