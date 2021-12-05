@@ -11,7 +11,7 @@
                         <v-col cols="12" md="12" class="text-center">
                             <v-responsive>
                                 <v-avatar size="150">
-                                    <img src="/anime/black.ico" alt="">
+                                    <img src="/anime/port.jpg" alt="">
                                 </v-avatar>
                             </v-responsive>
                             <span class="title">Aung Myint Myat</span><br>
