@@ -68,7 +68,7 @@
                                           </v-file-input>
                                           <div class="text-center">
                                              <v-avatar size="100">
-                                               <img :src="`/anime/${input}`" alt="" id="img">
+                                               <img :src="`/anime/${editinput}`" alt="" id="img">
                                              </v-avatar><br><br>
                                              <v-btn @click="updateicon">Update</v-btn>
                                           </div>
@@ -185,11 +185,12 @@ data()
      typeRules:[
          v=>!!v || 'Type is required'
      ],
-     input:'',
+     input:[],
      dialog5:false,
     showclose:false,
     dialog2:false,
     type:'',
+    editinput:[],
     slickOptions: {
               infinite: true,
               slidesToShow: 6,
@@ -232,7 +233,7 @@ logout()
   {
     await axios.get('/aframe/admin/getediticon/'+this.adminInfo.id)
     .then((resp)=>{
-      this.input=resp.data.avatar;
+      this.editinput=resp.data.avatar;
     })
   },
   async updateicon()

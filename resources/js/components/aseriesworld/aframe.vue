@@ -58,7 +58,7 @@
                                           </v-file-input>
                                           <div class="text-center">
                                              <v-avatar size="100">
-                                               <img :src="`/anime/${input}`" alt="" id="img">
+                                               <img :src="`/anime/${editinput}`" alt="" id="img">
                                              </v-avatar><br><br>
                                              <v-btn @click="updateicon">Update</v-btn>
                                           </div>
@@ -111,7 +111,8 @@ data()
   return {
     drawer:false,
     dialog:false,
-    input:'',
+    editinput:[],
+    input:[],
     links:[
       {icon:'home',title:'Home',to:'/aframe/home'},
       {icon:'chat',title:'Contact',to:'/aframe/contact'},
@@ -131,7 +132,7 @@ methods:{
   {
     await axios.get('/aframe/getediticon/'+this.frameuser.id)
     .then((resp)=>{
-      this.input=resp.data.useravatar;
+      this.editinput=resp.data.useravatar;
     })
   },
   image()
