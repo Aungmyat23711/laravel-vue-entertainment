@@ -134,7 +134,7 @@
                         <span class="red--text">{{error}}</span>
                         <v-responsive class="text-center">
                           <img
-                            :src="`/anime/${editPhoto}`"
+                            :src="`/anime/${newfile}`"
                             alt=""
                             id="img"
                             style="max-height: 250px"
@@ -205,7 +205,7 @@ export default {
       this.editTotal = item.total;
       this.editTepisode = item.total_episode;
       this.editStory = item.story;
-      this.editPhoto = item.photo;
+      this.newfile = item.photo;
       this.editType1=item.type1;
       this.editType2=item.type2;
       this.editType3=item.type3;
@@ -259,6 +259,7 @@ export default {
       this.dialog = false;
       await axios.post(`/animeframe/editdata/${this.id}`,formdata)
       .then((resp)=>{
+        this.edit
         this.getdata();
       const Toast = Swal.mixin({
       toast: true,
