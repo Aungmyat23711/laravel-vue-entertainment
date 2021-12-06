@@ -270,6 +270,8 @@ export default {
       .then((resp)=>{
         this.edit
         this.getdata();
+        this.editphoto="";
+        this.newfile=[];
       const Toast = Swal.mixin({
       toast: true,
       position: 'top-right',
