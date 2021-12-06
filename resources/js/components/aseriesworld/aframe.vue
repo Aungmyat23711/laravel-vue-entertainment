@@ -41,7 +41,7 @@
                </v-app-bar>
               <v-navigation-drawer app v-model="drawer" dark>
                  <v-layout column align-center class="mt-5" v-if="frameuser"> 
-                   <v-avatar size="100">
+                   <v-avatar size="99">
                                    <img :src="`/anime/${frameuser.useravatar}`" alt="">
                                     </v-avatar>
                            <v-dialog v-model="dialog">
