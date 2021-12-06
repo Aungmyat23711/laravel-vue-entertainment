@@ -140,6 +140,14 @@
                             style="max-height: 250px"
                           />
                         </v-responsive>
+                        <v-divider></v-divider>
+                         <v-responsive class="text-center">
+                          <img
+                            :src="`/anime/${editphoto}`"
+                            alt=""
+                            style="max-height: 250px"
+                          />
+                        </v-responsive>
                       </v-col>
                     </v-row>
                     <v-row>
@@ -205,12 +213,13 @@ export default {
       this.editTotal = item.total;
       this.editTepisode = item.total_episode;
       this.editStory = item.story;
-      this.newfile = item.photo;
+      this.editphoto = item.photo;
       this.editType1=item.type1;
       this.editType2=item.type2;
       this.editType3=item.type3;
       this.editType4=item.type4;
       this.editType5=item.type5;
+     
       this.id=item.id;
     },
     async deleteItem(item) {
@@ -317,13 +326,13 @@ export default {
       editTotal: "",
       editTepisode: "",
       editStory: "",
-      editPhoto: "",
       editType1:"",
       editType2:"",
       editType3:"",
       editType4:"",
       editType5:"",
-      newfile: [],
+      editphoto:[],
+      newfile:[],
       snackmessage: "",
       snackbar: false,
       error:'',
